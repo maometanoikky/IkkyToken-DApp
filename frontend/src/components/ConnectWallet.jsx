@@ -108,7 +108,7 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
 
     if (account) {
         return (
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4">
                 {networkName && (
                     <span className="badge-info capitalize">{networkName}</span>
                 )}
@@ -127,7 +127,7 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
     }
 
     return (
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3">
             <button
                 onClick={connectWallet}
                 disabled={isConnecting}

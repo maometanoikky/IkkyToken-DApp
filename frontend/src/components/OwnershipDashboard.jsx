@@ -70,7 +70,7 @@ export default function OwnershipDashboard({ contract, account }) {
         <div className="space-y-6">
             {/* Ownership Status Card */}
             <div className={`card ${isRenounced ? 'border-green-500/30 glow' : ''}`}>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4">
                     <h2 className="text-xl font-bold text-white flex items-center gap-2">
                         <svg className="w-6 h-6 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -97,8 +97,8 @@ export default function OwnershipDashboard({ contract, account }) {
                 <div className="space-y-4">
                     <div>
                         <label className="text-sm text-slate-400 block mb-1">Current Owner Address</label>
-                        <div className="flex items-center gap-2">
-                            <code className={`text-lg font-mono ${isZeroAddress ? 'text-green-400' : 'text-white'} break-all`}>
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                            <code className={`text-sm sm:text-lg font-mono ${isZeroAddress ? 'text-green-400' : 'text-white'} break-all`}>
                                 {isZeroAddress ? 'address(0) - Tidak Ada Owner' : ownerAddress}
                             </code>
                             {isOwner && !isRenounced && (
@@ -129,7 +129,7 @@ export default function OwnershipDashboard({ contract, account }) {
                     Token Info
                 </h2>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="bg-slate-800/50 rounded-xl p-4">
                         <p className="text-sm text-slate-400">Nama</p>
                         <p className="text-lg font-semibold text-white">{tokenInfo.name}</p>

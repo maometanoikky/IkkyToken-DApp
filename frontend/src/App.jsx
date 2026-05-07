@@ -96,7 +96,7 @@ function App() {
 
             {/* Header */}
             <header className="glass border-b border-slate-700/50 sticky top-0 z-40">
-                <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
                             <span className="text-white font-bold text-lg">K</span>
