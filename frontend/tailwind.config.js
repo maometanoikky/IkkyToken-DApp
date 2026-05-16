@@ -28,11 +28,21 @@ export default {
             animation: {
                 'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                 'gradient': 'gradient 8s linear infinite',
+                'fade-in-down': 'fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
             },
             keyframes: {
                 gradient: {
                     '0%, 100%': { backgroundPosition: '0% 50%' },
                     '50%': { backgroundPosition: '100% 50%' },
+                },
+                fadeInDown: {
+                    '0%': { opacity: '0', transform: 'translateY(-20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                fadeInUp: {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
                 }
             }
         },

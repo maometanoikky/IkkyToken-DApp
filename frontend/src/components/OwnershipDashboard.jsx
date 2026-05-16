@@ -69,29 +69,38 @@ export default function OwnershipDashboard({ contract, account }) {
     return (
         <div className="space-y-6">
             {/* Ownership Status Card */}
-            <div className={`card ${isRenounced ? 'border-green-500/30 glow' : ''}`}>
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4">
+            <div className={`card relative overflow-hidden ${isRenounced ? 'border-emerald-500/50 glow' : 'border-slate-700/50'}`}>
+                {/* Background Glow Effect - Only glow green when decentralized */}
+                {isRenounced && (
+                    <div className="absolute -right-20 -top-20 w-64 h-64 rounded-full blur-3xl opacity-20 pointer-events-none bg-emerald-500"></div>
+                )}
+                
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-6 relative z-10">
                     <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                        <svg className="w-6 h-6 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-6 h-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                         Status Kepemilikan
                     </h2>
-                    {isRenounced ? (
-                        <span className="badge-success">
-                            <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                            DESENTRALISASI
-                        </span>
-                    ) : (
-                        <span className="badge-warning">
-                            <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                            </svg>
-                            TERPUSAT
-                        </span>
-                    )}
+                    
+                    {/* Dynamic Security Badge */}
+                    <div className="flex-shrink-0">
+                        {isRenounced ? (
+                            <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 rounded-full backdrop-blur-md shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all">
+                                <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                                <span className="text-emerald-400 font-bold text-sm tracking-wide">FULLY DECENTRALIZED</span>
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-2 bg-slate-800/50 border border-slate-600/50 px-4 py-2 rounded-full backdrop-blur-md transition-all">
+                                <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                </svg>
+                                <span className="text-slate-300 font-semibold text-sm tracking-wide">STATUS: TERPUSAT</span>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 <div className="space-y-4">
@@ -149,16 +158,29 @@ export default function OwnershipDashboard({ contract, account }) {
                 </div>
             </div>
 
-            {/* Refresh Button */}
-            <button
-                onClick={fetchContractData}
-                className="btn-secondary w-full flex items-center justify-center gap-2"
-            >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                Refresh Data
-            </button>
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                    onClick={fetchContractData}
+                    className="flex-1 btn-secondary flex items-center justify-center gap-2"
+                >
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Refresh Data
+                </button>
+                <a
+                    href={`https://sepolia.etherscan.io/address/${contract?.target || contract?.address}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 border border-slate-600 flex items-center justify-center gap-2"
+                >
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    Lihat di Etherscan
+                </a>
+            </div>
         </div>
     );
 }

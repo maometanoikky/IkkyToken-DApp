@@ -7,13 +7,39 @@
   line-height: 1.5;
   font-weight: 400;
   color: #e2e8f0;
-  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+  background-color: #020617;
   min-height: 100vh;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  background-color: #020617;
+  /* Breathtaking animated mesh gradient background */
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.15) 0px, transparent 50%);
+  background-attachment: fixed;
+  background-size: cover;
+  position: relative;
+}
+
+/* Subtle grid overlay for tech vibe */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
 }
 
 #root {
@@ -26,28 +52,30 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: rgba(2, 6, 23, 0.8);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #475569;
+  background: rgba(56, 189, 248, 0.5);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  background: rgba(56, 189, 248, 0.8);
 }
 
-/* Glassmorphism effect */
+/* Premium Glassmorphism effect */
 .glass {
-  background: rgba(30, 41, 59, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
-/* Gradient text */
+/* Vibrant Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #38bdf8 0%, #a78bfa 50%, #38bdf8 100%);
+  background: linear-gradient(to right, #00f2fe 0%, #4facfe 50%, #00f2fe 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -55,14 +83,21 @@ body {
   animation: gradient 3s linear infinite;
 }
 
+.gradient-text-purple {
+  background: linear-gradient(to right, #a18cd1 0%, #fbc2eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 @keyframes gradient {
   0%, 100% { background-position: 0% center; }
   50% { background-position: 100% center; }
 }
 
-/* Glow effect */
+/* Premium Glow effect */
 .glow {
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.25);
+  border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .glow-purple {
@@ -122,4 +157,20 @@ body {
 
 .badge-info {
   @apply badge bg-primary-500/20 text-primary-400 border border-primary-500/30;
+}
+
+/* Layout Transition Animations */
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down-fade {
+  animation: slideDownFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
