@@ -58,9 +58,9 @@ const TokenomicsChart = ({ contract, account, isRenounced }) => {
     const CustomTooltip = ({ active, payload }) => {
         if (active && payload && payload.length) {
             return (
-                <div className="bg-slate-800 border border-slate-700 p-3 rounded-lg shadow-xl">
-                    <p className="text-white font-medium">{payload[0].name}</p>
-                    <p className="text-primary-400">{payload[0].value.toLocaleString()} KYT</p>
+                <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3 rounded-lg shadow-xl">
+                    <p className="text-slate-900 dark:text-white font-medium">{payload[0].name}</p>
+                    <p className="text-primary-600 dark:text-primary-400">{payload[0].value.toLocaleString()} KYT</p>
                 </div>
             );
         }
@@ -69,14 +69,14 @@ const TokenomicsChart = ({ contract, account, isRenounced }) => {
 
     return (
         <div className="card mt-6">
-            <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                <svg className="w-6 h-6 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                <svg className="w-6 h-6 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                 </svg>
                 Tokenomics & Distribusi
             </h2>
-            <p className="text-sm text-slate-400 mb-6">
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
                 Menganalisis tingkat sentralisasi berdasarkan distribusi pasokan token saat ini.
             </p>
 
@@ -110,42 +110,42 @@ const TokenomicsChart = ({ contract, account, isRenounced }) => {
                         </ResponsiveContainer>
                         {/* Center Text */}
                         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none pb-8">
-                            <span className="text-2xl font-bold text-white">{userPercentage.toFixed(1)}%</span>
-                            <span className="text-[10px] text-slate-400 uppercase tracking-wider">Milik Anda</span>
+                            <span className="text-2xl font-bold text-slate-900 dark:text-white">{userPercentage.toFixed(1)}%</span>
+                            <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider">Milik Anda</span>
                         </div>
                     </div>
 
                     {/* Analysis Info */}
                     <div className="w-full md:w-1/2 space-y-4">
-                        <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                            <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
-                                <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className="bg-slate-100 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-200 dark:border-slate-700/50">
+                            <h3 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                 </svg>
                                 Analisis Konsentrasi
                             </h3>
-                            <p className="text-sm text-slate-300">
-                                Total Pasokan: <strong className="text-white">{(data[0]?.value + data[1]?.value)?.toLocaleString()} KYT</strong>
+                            <p className="text-sm text-slate-600 dark:text-slate-300">
+                                Total Pasokan: <strong className="text-slate-900 dark:text-white">{(data[0]?.value + data[1]?.value)?.toLocaleString()} KYT</strong>
                             </p>
                             
                             {userPercentage > 50 ? (
                                 <div className="mt-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
-                                    <p className="text-xs text-red-400 font-medium">
+                                    <p className="text-xs text-red-600 dark:text-red-400 font-medium">
                                         ⚠️ PERINGATAN: Risiko Manipulasi Tinggi!
                                     </p>
-                                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
                                         Anda memegang <strong>{userPercentage.toFixed(1)}%</strong> dari total pasokan. 
-                                        Bahkan jika Anda sudah menekan <span className="text-white font-semibold">Renounce Ownership</span>, 
+                                        Bahkan jika Anda sudah menekan <span className="text-slate-900 dark:text-white font-semibold">Renounce Ownership</span>, 
                                         Anda masih bisa melakukan <em>dumping</em> (menjual besar-besaran) dan menghancurkan harga token. 
                                         Ini membuktikan bahwa desentralisasi sejati membutuhkan distribusi token yang adil, bukan hanya melepas hak akses <em>Smart Contract</em>.
                                     </p>
                                 </div>
                             ) : (
                                 <div className="mt-3 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
-                                    <p className="text-xs text-green-400 font-medium">
+                                    <p className="text-xs text-green-600 dark:text-green-400 font-medium">
                                         ✅ Distribusi Cukup Aman
                                     </p>
-                                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
                                         Kepemilikan Anda berada di bawah batas mayoritas. Distribusi token yang menyebar luas meminimalisir risiko manipulasi pasar oleh satu entitas (Whale).
                                     </p>
                                 </div>

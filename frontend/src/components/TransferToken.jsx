@@ -71,30 +71,30 @@ export default function TransferToken({ contract, onTransaction }) {
         <div className="card border-blue-500/30">
             <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                     </svg>
                 </div>
                 <div>
-                    <h2 className="text-xl font-bold text-white">Transfer Token</h2>
-                    <p className="text-sm text-slate-400">Kirim token KYT ke alamat lain (Simulasi Pengguna)</p>
+                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">Transfer Token</h2>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Kirim token KYT ke alamat lain (Simulasi Pengguna)</p>
                 </div>
             </div>
 
             <form onSubmit={handleTransfer} className="space-y-4">
                 <div>
-                    <label className="text-sm text-slate-400 block mb-1">Alamat Penerima</label>
+                    <label className="text-sm text-slate-600 dark:text-slate-400 block mb-1">Alamat Penerima</label>
                     <input
                         type="text"
                         value={recipientAddress}
                         onChange={(e) => setRecipientAddress(e.target.value)}
                         placeholder="0x..."
-                        className="input-field font-mono text-sm border-slate-600 focus:border-blue-500 focus:ring-blue-500"
+                        className="input-field font-mono text-sm border-slate-300 dark:border-slate-600 focus:border-blue-500 focus:ring-blue-500"
                         disabled={isSubmitting}
                     />
                 </div>
                 <div>
-                    <label className="text-sm text-slate-400 block mb-1">Jumlah (KYT)</label>
+                    <label className="text-sm text-slate-600 dark:text-slate-400 block mb-1">Jumlah (KYT)</label>
                     <input
                         type="number"
                         value={transferAmount}
@@ -102,7 +102,7 @@ export default function TransferToken({ contract, onTransaction }) {
                         placeholder="0.0"
                         min="0"
                         step="any"
-                        className="input-field border-slate-600 focus:border-blue-500 focus:ring-blue-500"
+                        className="input-field border-slate-300 dark:border-slate-600 focus:border-blue-500 focus:ring-blue-500"
                         disabled={isSubmitting}
                     />
                 </div>

@@ -114,7 +114,7 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
                 )}
                 <div className="glass rounded-xl px-4 py-2 flex items-center gap-3">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-white font-medium">{formatAddress(account)}</span>
+                    <span className="text-slate-900 dark:text-white font-medium">{formatAddress(account)}</span>
                 </div>
                 <button
                     onClick={disconnectWallet}

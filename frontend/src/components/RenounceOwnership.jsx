@@ -63,8 +63,8 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
-                    <h2 className="text-2xl font-bold text-green-400 mb-2">Token Terdesentralisasi!</h2>
-                    <p className="text-slate-400">
+                    <h2 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">Token Terdesentralisasi!</h2>
+                    <p className="text-slate-600 dark:text-slate-400">
                         Kepemilikan sudah dilepaskan secara permanen. Tidak ada pihak yang dapat mengontrol token ini.
                     </p>
                 </div>
@@ -86,8 +86,8 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                     </div>
-                    <h2 className="text-xl font-bold text-white mb-2">Desentralisasi Token</h2>
-                    <p className="text-slate-400 mb-6">
+                    <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Desentralisasi Token</h2>
+                    <p className="text-slate-600 dark:text-slate-400 mb-6">
                         Lepaskan kepemilikan secara permanen untuk membuat token benar-benar terdesentralisasi.
                     </p>
                     <button
@@ -102,22 +102,22 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
             {/* Confirmation Modal */}
             {showModal && (
                 <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-                    <div className="bg-slate-900 border border-red-500/50 rounded-2xl max-w-lg w-full p-6 animate-pulse-slow">
+                    <div className="bg-white dark:bg-slate-900 border border-red-300 dark:border-red-500/50 rounded-2xl max-w-lg w-full p-6 animate-pulse-slow">
                         <div className="text-center mb-6">
                             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
                                 <svg className="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                 </svg>
                             </div>
-                            <h3 className="text-2xl font-bold text-red-500 mb-2">⚠️ PERINGATAN PENTING ⚠️</h3>
-                            <p className="text-slate-300">
-                                Anda akan melepaskan kepemilikan kontrak secara <strong className="text-red-400">PERMANEN</strong>.
+                            <h3 className="text-2xl font-bold text-red-600 dark:text-red-500 mb-2">⚠️ PERINGATAN PENTING ⚠️</h3>
+                            <p className="text-slate-600 dark:text-slate-300">
+                                Anda akan melepaskan kepemilikan kontrak secara <strong className="text-red-600 dark:text-red-400">PERMANEN</strong>.
                             </p>
                         </div>
 
                         <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 mb-6">
-                            <p className="text-red-400 text-sm mb-2 font-semibold">Setelah aksi ini:</p>
-                            <ul className="text-slate-400 text-sm space-y-1">
+                            <p className="text-red-600 dark:text-red-400 text-sm mb-2 font-semibold">Setelah aksi ini:</p>
+                            <ul className="text-slate-600 dark:text-slate-400 text-sm space-y-1">
                                 <li>❌ Anda TIDAK BISA lagi mint token baru</li>
                                 <li>❌ Anda TIDAK BISA lagi pause/unpause transfer</li>
                                 <li>❌ Anda TIDAK BISA mengambil kembali kepemilikan</li>
@@ -126,8 +126,8 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                         </div>
 
                         <div className="mb-6">
-                            <label className="text-sm text-slate-400 block mb-2">
-                                Ketik <code className="bg-slate-800 px-2 py-1 rounded text-red-400">RENOUNCE</code> untuk konfirmasi:
+                            <label className="text-sm text-slate-600 dark:text-slate-400 block mb-2">
+                                Ketik <code className="bg-slate-200 dark:bg-slate-800 px-2 py-1 rounded text-red-600 dark:text-red-400">RENOUNCE</code> untuk konfirmasi:
                             </label>
                             <input
                                 type="text"

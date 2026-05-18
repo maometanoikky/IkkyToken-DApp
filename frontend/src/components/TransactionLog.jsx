@@ -11,13 +11,13 @@ export default function TransactionLog({ transactions }) {
     if (transactions.length === 0) {
         return (
             <div className="card">
-                <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                    <svg className="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <svg className="w-6 h-6 text-slate-500 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
                     Log Transaksi
                 </h2>
-                <p className="text-slate-500 text-center py-8">
+                <p className="text-slate-600 dark:text-slate-500 text-center py-8">
                     Belum ada transaksi. Lakukan aksi untuk melihat log di sini.
                 </p>
             </div>
@@ -67,12 +67,12 @@ export default function TransactionLog({ transactions }) {
 
     return (
         <div className="card">
-            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <svg className="w-6 h-6 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                <svg className="w-6 h-6 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
                 Log Transaksi
-                <span className="text-sm font-normal text-slate-400">({transactions.length})</span>
+                <span className="text-sm font-normal text-slate-500 dark:text-slate-400">({transactions.length})</span>
             </h2>
 
             <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
@@ -85,7 +85,7 @@ export default function TransactionLog({ transactions }) {
                                     ? 'bg-red-500/10 border-red-500/30'
                                     : tx.status === 'success'
                                         ? 'bg-green-500/5 border-green-500/20'
-                                        : 'bg-slate-800/50 border-slate-700'
+                                        : 'bg-slate-100 dark:bg-slate-800/50 border-slate-300 dark:border-slate-700'
                                 }`}
                         >
                             <div className="flex items-start gap-3">
@@ -97,7 +97,7 @@ export default function TransactionLog({ transactions }) {
                                             {new Date().toLocaleTimeString('id-ID')}
                                         </span>
                                     </div>
-                                    <p className={`text-sm ${tx.status === 'error' ? 'text-red-400' : 'text-slate-300'}`}>
+                                    <p className={`text-sm ${tx.status === 'error' ? 'text-red-600 dark:text-red-400' : 'text-slate-600 dark:text-slate-300'}`}>
                                         {tx.message}
                                     </p>
                                     {tx.hash && (
@@ -105,7 +105,7 @@ export default function TransactionLog({ transactions }) {
                                             href={`https://sepolia.etherscan.io/tx/${tx.hash}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-xs text-primary-400 hover:text-primary-300 mt-2 inline-flex items-center gap-1"
+                                            className="text-xs text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 mt-2 inline-flex items-center gap-1"
                                         >
                                             <span className="font-mono">{formatAddress(tx.hash)}</span>
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -119,8 +119,8 @@ export default function TransactionLog({ transactions }) {
                             {/* Error Details for Bab IV Evidence */}
                             {tx.status === 'error' && (
                                 <div className="mt-3 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
-                                    <p className="text-xs text-red-400 font-semibold mb-1">📋 Detail Error (Bukti Bab IV):</p>
-                                    <code className="text-xs text-red-300 break-all block">
+                                    <p className="text-xs text-red-600 dark:text-red-400 font-semibold mb-1">📋 Detail Error (Bukti Bab IV):</p>
+                                    <code className="text-xs text-red-500 dark:text-red-300 break-all block">
                                         {tx.message}
                                     </code>
                                 </div>
