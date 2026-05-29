@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserProvider } from 'ethers';
 import { formatAddress, NETWORKS } from '../config/contract';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * ConnectWallet Component
@@ -11,17 +12,23 @@ import { formatAddress, NETWORKS } from '../config/contract';
 export default function ConnectWallet({ account, setAccount, setSigner, setProvider }) {
     const [isConnecting, setIsConnecting] = useState(false);
     const [networkName, setNetworkName] = useState('');
+    const { t } = useLanguage();
 
     const connectWallet = async () => {
         if (typeof window.ethereum === 'undefined') {
-            alert('MetaMask tidak terinstall! Silakan install MetaMask terlebih dahulu.');
+            alert(t('metaMaskNotInstalled'));
             return;
         }
 
         setIsConnecting(true);
         try {
+            // Memaksa MetaMask memunculkan jendela pemilihan akun (wallet_requestPermissions)
+            await window.ethereum.request({
+                method: 'wallet_requestPermissions',
+                params: [{ eth_accounts: {} }]
+            });
 
-            // Request account access
+            // Request account access setelah pemilihan akun
             const accounts = await window.ethereum.request({
                 method: 'eth_requestAccounts'
             });
@@ -30,6 +37,13 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
             const provider = new BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
             const network = await provider.getNetwork();
+
+            // Meminta Tanda Tangan Kriptografi untuk Verifikasi Kepemilikan Akun
+            const message = t('verificationMessage', {
+                address: accounts[0],
+                timestamp: new Date().toLocaleString()
+            });
+            await signer.signMessage(message);
 
             setProvider(provider);
             setSigner(signer);
@@ -52,7 +66,12 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
 
         } catch (error) {
             console.error('Error connecting wallet:', error);
-            alert('Gagal menghubungkan wallet: ' + error.message);
+            // Menangani error -32002 (Request already pending) dengan pesan yang ramah pengguna
+            if (error.code === -32002 || (error.message && error.message.includes('already pending'))) {
+                alert(t('alreadyPending'));
+            } else {
+                alert(t('connectionFailed', { error: error.message }));
+            }
         } finally {
             setIsConnecting(false);
         }
@@ -118,9 +137,9 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
                 </div>
                 <button
                     onClick={disconnectWallet}
-                    className="btn-secondary text-sm py-2 px-4"
+                    className="btn-secondary text-sm py-2 px-4 cursor-pointer"
                 >
-                    Disconnect
+                    {t('disconnect')}
                 </button>
             </div>
         );
@@ -131,7 +150,7 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
             <button
                 onClick={connectWallet}
                 disabled={isConnecting}
-                className="btn-primary flex items-center gap-2"
+                className="btn-primary flex items-center gap-2 cursor-pointer"
             >
                 {isConnecting ? (
                     <>
@@ -139,27 +158,27 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                         </svg>
-                        Connecting...
+                        {t('connecting')}
                     </>
                 ) : (
                     <>
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
                         </svg>
-                        Connect Wallet
+                        {t('connectWalletBtn')}
                     </>
                 )}
             </button>
             <button
                 onClick={switchToLocalhost}
-                className="btn-secondary text-sm py-2 px-4"
+                className="btn-secondary text-sm py-2 px-4 cursor-pointer"
                 title="Switch to Localhost"
             >
                 Localhost
             </button>
             <button
                 onClick={switchToSepolia}
-                className="btn-secondary text-sm py-2 px-4"
+                className="btn-secondary text-sm py-2 px-4 cursor-pointer"
                 title="Switch to Sepolia Testnet"
             >
                 Sepolia

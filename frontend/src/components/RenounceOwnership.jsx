@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * RenounceOwnership Component
@@ -10,12 +11,13 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
     const [showModal, setShowModal] = useState(false);
     const [confirmText, setConfirmText] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { t } = useLanguage();
 
     const CONFIRM_PHRASE = 'RENOUNCE';
 
     const handleRenounce = async () => {
         if (confirmText !== CONFIRM_PHRASE) {
-            alert(`Mohon ketik "${CONFIRM_PHRASE}" untuk konfirmasi!`);
+            alert(t('typePhraseValidation'));
             return;
         }
 
@@ -27,7 +29,7 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                 type: 'renounce',
                 hash: tx.hash,
                 status: 'pending',
-                message: 'Melepaskan kepemilikan secara permanen...'
+                message: t('renounceInProgress')
             });
 
             await tx.wait();
@@ -36,7 +38,7 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                 type: 'renounce',
                 hash: tx.hash,
                 status: 'success',
-                message: '🎉 Kepemilikan berhasil dilepaskan secara PERMANEN! Token sekarang terdesentralisasi.'
+                message: t('renounceSuccess')
             });
 
             setShowModal(false);
@@ -47,7 +49,7 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                 type: 'renounce',
                 hash: null,
                 status: 'error',
-                message: error.reason || error.message || 'Renounce gagal!'
+                message: error.reason || error.message || t('renounceFailed')
             });
         } finally {
             setIsSubmitting(false);
@@ -63,9 +65,9 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
-                    <h2 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">Token Terdesentralisasi!</h2>
+                    <h2 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">{t('decentralizedCardTitle')}</h2>
                     <p className="text-slate-600 dark:text-slate-400">
-                        Kepemilikan sudah dilepaskan secara permanen. Tidak ada pihak yang dapat mengontrol token ini.
+                        {t('decentralizedCardDesc')}
                     </p>
                 </div>
             </div>
@@ -86,15 +88,15 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                     </div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Desentralisasi Token</h2>
+                    <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{t('renounceTitle')}</h2>
                     <p className="text-slate-600 dark:text-slate-400 mb-6">
-                        Lepaskan kepemilikan secara permanen untuk membuat token benar-benar terdesentralisasi.
+                        {t('renounceDesc')}
                     </p>
                     <button
                         onClick={() => setShowModal(true)}
-                        className="btn-danger text-lg glow-red w-full max-w-md"
+                        className="btn-danger text-lg glow-red w-full max-w-md cursor-pointer"
                     >
-                        🔓 Renounce Ownership Permanently
+                        {t('renounceBtn')}
                     </button>
                 </div>
             </div>
@@ -109,31 +111,31 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                 </svg>
                             </div>
-                            <h3 className="text-2xl font-bold text-red-600 dark:text-red-500 mb-2">⚠️ PERINGATAN PENTING ⚠️</h3>
+                            <h3 className="text-2xl font-bold text-red-600 dark:text-red-500 mb-2">{t('renounceWarningTitle')}</h3>
                             <p className="text-slate-600 dark:text-slate-300">
-                                Anda akan melepaskan kepemilikan kontrak secara <strong className="text-red-600 dark:text-red-400">PERMANEN</strong>.
+                                {t('renounceWarningDesc')}
                             </p>
                         </div>
 
                         <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 mb-6">
-                            <p className="text-red-600 dark:text-red-400 text-sm mb-2 font-semibold">Setelah aksi ini:</p>
+                            <p className="text-red-600 dark:text-red-400 text-sm mb-2 font-semibold">{t('afterActionTitle')}</p>
                             <ul className="text-slate-600 dark:text-slate-400 text-sm space-y-1">
-                                <li>❌ Anda TIDAK BISA lagi mint token baru</li>
-                                <li>❌ Anda TIDAK BISA lagi pause/unpause transfer</li>
-                                <li>❌ Anda TIDAK BISA mengambil kembali kepemilikan</li>
-                                <li>❌ TIDAK ADA SIAPAPUN yang bisa menjadi owner baru</li>
+                                <li>{t('afterAction1')}</li>
+                                <li>{t('afterAction2')}</li>
+                                <li>{t('afterAction3')}</li>
+                                <li>{t('afterAction4')}</li>
                             </ul>
                         </div>
 
                         <div className="mb-6">
                             <label className="text-sm text-slate-600 dark:text-slate-400 block mb-2">
-                                Ketik <code className="bg-slate-200 dark:bg-slate-800 px-2 py-1 rounded text-red-600 dark:text-red-400">RENOUNCE</code> untuk konfirmasi:
+                                {t('typePhrase')}
                             </label>
                             <input
                                 type="text"
                                 value={confirmText}
                                 onChange={(e) => setConfirmText(e.target.value.toUpperCase())}
-                                placeholder="Ketik RENOUNCE"
+                                placeholder={t('typePhrasePlaceholder')}
                                 className="input-field text-center font-bold text-lg"
                                 disabled={isSubmitting}
                             />
@@ -146,14 +148,14 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                                     setConfirmText('');
                                 }}
                                 disabled={isSubmitting}
-                                className="flex-1 btn-secondary"
+                                className="flex-1 btn-secondary cursor-pointer"
                             >
-                                Batal
+                                {t('cancelBtn')}
                             </button>
                             <button
                                 onClick={handleRenounce}
                                 disabled={isSubmitting || confirmText !== CONFIRM_PHRASE}
-                                className={`flex-1 btn-danger ${confirmText === CONFIRM_PHRASE ? 'glow-red' : ''}`}
+                                className={`flex-1 btn-danger cursor-pointer ${confirmText === CONFIRM_PHRASE ? 'glow-red' : ''}`}
                             >
                                 {isSubmitting ? (
                                     <span className="flex items-center justify-center gap-2">
@@ -161,10 +163,10 @@ export default function RenounceOwnership({ contract, isOwner, isRenounced, onTr
                                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                         </svg>
-                                        Processing...
+                                        {t('sending')}
                                     </span>
                                 ) : (
-                                    'Konfirmasi Renounce'
+                                    t('confirmRenounceBtn')
                                 )}
                             </button>
                         </div>

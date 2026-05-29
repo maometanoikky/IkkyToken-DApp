@@ -51,7 +51,7 @@ export const IKKYTOKEN_ABI = [
  * PENTING: Ganti dengan alamat kontrak setelah deploy!
  * Alamat ini akan berbeda untuk setiap deployment.
  */
-export const CONTRACT_ADDRESS = "0x78E7ff55799D465670895bbb2A3E142E32dc39E6";
+export const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 /**
  * Network Configuration

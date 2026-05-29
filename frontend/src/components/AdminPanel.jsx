@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { parseEther } from 'ethers';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * AdminPanel Component
@@ -13,11 +14,12 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
     const [mintAmount, setMintAmount] = useState('');
     const [blacklistAddress, setBlacklistAddress] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { t } = useLanguage();
 
     const handleMint = async (e) => {
         e.preventDefault();
         if (!mintAddress || !mintAmount) {
-            alert('Mohon isi alamat dan jumlah token!');
+            alert(t('fillAddressAndAmount'));
             return;
         }
 
@@ -30,16 +32,16 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'mint',
                 hash: tx.hash,
                 status: 'pending',
-                message: `Minting ${mintAmount} KYT ke ${mintAddress}...`
+                message: t('mintingInProgress', { amount: mintAmount, address: mintAddress })
             });
 
-            const receipt = await tx.wait();
+            await tx.wait();
 
             onTransaction({
                 type: 'mint',
                 hash: tx.hash,
                 status: 'success',
-                message: `Berhasil mint ${mintAmount} KYT ke ${mintAddress}`
+                message: t('mintSuccess', { amount: mintAmount, address: mintAddress })
             });
 
             setMintAddress('');
@@ -50,7 +52,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'mint',
                 hash: null,
                 status: 'error',
-                message: error.reason || error.message || 'Mint gagal!'
+                message: error.reason || error.message || t('mintFailed')
             });
         } finally {
             setIsSubmitting(false);
@@ -66,7 +68,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'pause',
                 hash: tx.hash,
                 status: 'pending',
-                message: 'Mem-pause token transfer...'
+                message: t('pausingInProgress')
             });
 
             await tx.wait();
@@ -75,7 +77,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'pause',
                 hash: tx.hash,
                 status: 'success',
-                message: 'Token berhasil di-pause!'
+                message: t('pauseSuccess')
             });
         } catch (error) {
             console.error('Pause error:', error);
@@ -83,7 +85,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'pause',
                 hash: null,
                 status: 'error',
-                message: error.reason || error.message || 'Pause gagal!'
+                message: error.reason || error.message || t('pauseFailed')
             });
         } finally {
             setIsSubmitting(false);
@@ -99,7 +101,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'unpause',
                 hash: tx.hash,
                 status: 'pending',
-                message: 'Meng-unpause token transfer...'
+                message: t('unpausingInProgress')
             });
 
             await tx.wait();
@@ -108,7 +110,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'unpause',
                 hash: tx.hash,
                 status: 'success',
-                message: 'Token berhasil di-unpause!'
+                message: t('unpauseSuccess')
             });
         } catch (error) {
             console.error('Unpause error:', error);
@@ -116,7 +118,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'unpause',
                 hash: null,
                 status: 'error',
-                message: error.reason || error.message || 'Unpause gagal!'
+                message: error.reason || error.message || t('unpauseFailed')
             });
         } finally {
             setIsSubmitting(false);
@@ -126,7 +128,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
     const handleBlacklist = async (e) => {
         e.preventDefault();
         if (!blacklistAddress) {
-            alert('Mohon isi alamat untuk di-blacklist!');
+            alert(t('fillBlacklistAddress'));
             return;
         }
 
@@ -137,7 +139,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'blacklist',
                 hash: tx.hash,
                 status: 'pending',
-                message: `Memasukkan ${blacklistAddress} ke blacklist...`
+                message: t('blacklistingInProgress', { address: blacklistAddress })
             });
 
             await tx.wait();
@@ -146,7 +148,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'blacklist',
                 hash: tx.hash,
                 status: 'success',
-                message: `Alamat ${blacklistAddress} berhasil di-blacklist!`
+                message: t('blacklistSuccess', { address: blacklistAddress })
             });
             setBlacklistAddress('');
         } catch (error) {
@@ -155,7 +157,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'blacklist',
                 hash: null,
                 status: 'error',
-                message: error.reason || error.message || 'Gagal menambahkan ke blacklist!'
+                message: error.reason || error.message || t('blacklistFailed')
             });
         } finally {
             setIsSubmitting(false);
@@ -165,7 +167,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
     const handleUnblacklist = async (e) => {
         e.preventDefault();
         if (!blacklistAddress) {
-            alert('Mohon isi alamat untuk di-unblacklist!');
+            alert(t('fillUnblacklistAddress'));
             return;
         }
 
@@ -176,7 +178,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'unblacklist',
                 hash: tx.hash,
                 status: 'pending',
-                message: `Mengeluarkan ${blacklistAddress} dari blacklist...`
+                message: t('unblacklistingInProgress', { address: blacklistAddress })
             });
 
             await tx.wait();
@@ -185,7 +187,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'unblacklist',
                 hash: tx.hash,
                 status: 'success',
-                message: `Alamat ${blacklistAddress} berhasil dikeluarkan dari blacklist!`
+                message: t('unblacklistSuccess', { address: blacklistAddress })
             });
             setBlacklistAddress('');
         } catch (error) {
@@ -194,7 +196,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'unblacklist',
                 hash: null,
                 status: 'error',
-                message: error.reason || error.message || 'Gagal mengeluarkan dari blacklist!'
+                message: error.reason || error.message || t('unblacklistFailed')
             });
         } finally {
             setIsSubmitting(false);
@@ -209,10 +211,10 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                     <svg className="w-6 h-6 text-slate-400 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
-                    <h2 className="text-xl font-bold text-slate-500 dark:text-slate-500">Panel Admin</h2>
+                    <h2 className="text-xl font-bold text-slate-500 dark:text-slate-500">{t('adminPanelTitle')}</h2>
                 </div>
                 <p className="text-slate-500 dark:text-slate-500 text-center py-8">
-                    Anda bukan owner. Panel ini hanya dapat diakses oleh owner kontrak.
+                    {t('notOwnerDesc')}
                 </p>
             </div>
         );
@@ -225,7 +227,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <h2 className="text-xl font-bold text-slate-900 dark:text-white">Panel Admin (Owner Only)</h2>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t('adminPanelTitleOwner')}</h2>
             </div>
 
             {/* Mint Section */}
@@ -234,11 +236,11 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                     <svg className="w-5 h-5 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-                    Mint Token
+                    {t('mintToken')}
                 </h3>
                 <form onSubmit={handleMint} className="space-y-3">
                     <div>
-                        <label className="text-sm text-slate-600 dark:text-slate-400 block mb-1">Alamat Penerima</label>
+                        <label className="text-sm text-slate-600 dark:text-slate-400 block mb-1">{t('mintAddress')}</label>
                         <input
                             type="text"
                             value={mintAddress}
@@ -249,7 +251,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                         />
                     </div>
                     <div>
-                        <label className="text-sm text-slate-600 dark:text-slate-400 block mb-1">Jumlah Token (KYT)</label>
+                        <label className="text-sm text-slate-600 dark:text-slate-400 block mb-1">{t('mintAmount')}</label>
                         <input
                             type="number"
                             value={mintAmount}
@@ -264,7 +266,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="btn-primary w-full flex items-center justify-center gap-2"
+                        className="btn-primary w-full flex items-center justify-center gap-2 cursor-pointer"
                     >
                         {isSubmitting ? (
                             <>
@@ -272,14 +274,14 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                 </svg>
-                                Processing...
+                                {t('sending')}
                             </>
                         ) : (
                             <>
                                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                 </svg>
-                                Mint Token
+                                {t('mintToken')}
                             </>
                         )}
                     </button>
@@ -292,13 +294,13 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                     <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Pause Control
+                    {t('pauseControl')}
                 </h3>
                 <div className="flex flex-col sm:flex-row gap-3">
                     <button
                         onClick={handlePause}
                         disabled={isSubmitting || isPaused}
-                        className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2
+                        className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer
               ${isPaused
                                 ? 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 cursor-not-allowed'
                                 : 'bg-yellow-600 hover:bg-yellow-500 text-white'}`}
@@ -311,7 +313,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                     <button
                         onClick={handleUnpause}
                         disabled={isSubmitting || !isPaused}
-                        className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2
+                        className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer
               ${!isPaused
                                 ? 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500 cursor-not-allowed'
                                 : 'bg-green-600 hover:bg-green-500 text-white'}`}
@@ -331,11 +333,11 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                     <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
-                    Blacklist Control
+                    {t('blacklistControl')}
                 </h3>
                 <div className="space-y-3">
                     <div>
-                        <label className="text-sm text-slate-600 dark:text-slate-400 block mb-1">Alamat Target</label>
+                        <label className="text-sm text-slate-600 dark:text-slate-400 block mb-1">{t('blacklistTarget')}</label>
                         <input
                             type="text"
                             value={blacklistAddress}
@@ -349,7 +351,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                         <button
                             onClick={handleBlacklist}
                             disabled={isSubmitting}
-                            className="flex-1 bg-red-600 hover:bg-red-500 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 bg-red-600 hover:bg-red-500 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         >
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
@@ -359,7 +361,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                         <button
                             onClick={handleUnblacklist}
                             disabled={isSubmitting}
-                            className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         >
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

@@ -1,4 +1,5 @@
 import { formatAddress } from '../config/contract';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * TransactionLog Component
@@ -8,6 +9,8 @@ import { formatAddress } from '../config/contract';
  * Menampilkan status sukses/gagal dan error message untuk revert.
  */
 export default function TransactionLog({ transactions }) {
+    const { t } = useLanguage();
+
     if (transactions.length === 0) {
         return (
             <div className="card">
@@ -15,10 +18,10 @@ export default function TransactionLog({ transactions }) {
                     <svg className="w-6 h-6 text-slate-500 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
-                    Log Transaksi
+                    {t('logTitle')}
                 </h2>
                 <p className="text-slate-600 dark:text-slate-500 text-center py-8">
-                    Belum ada transaksi. Lakukan aksi untuk melihat log di sini.
+                    {t('noTransactions')}
                 </p>
             </div>
         );
@@ -60,7 +63,10 @@ export default function TransactionLog({ transactions }) {
             mint: { text: 'MINT', class: 'badge-info' },
             pause: { text: 'PAUSE', class: 'badge-warning' },
             unpause: { text: 'UNPAUSE', class: 'badge-success' },
-            renounce: { text: 'RENOUNCE', class: 'badge-danger' }
+            renounce: { text: 'RENOUNCE', class: 'badge-danger' },
+            transfer: { text: 'TRANSFER', class: 'badge-info' },
+            blacklist: { text: 'BLACKLIST', class: 'badge-danger' },
+            unblacklist: { text: 'UNBLACKLIST', class: 'badge-success' }
         };
         return labels[type] || { text: type.toUpperCase(), class: 'badge-info' };
     };
@@ -71,7 +77,7 @@ export default function TransactionLog({ transactions }) {
                 <svg className="w-6 h-6 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
-                Log Transaksi
+                {t('logTitle')}
                 <span className="text-sm font-normal text-slate-500 dark:text-slate-400">({transactions.length})</span>
             </h2>
 
@@ -94,7 +100,7 @@ export default function TransactionLog({ transactions }) {
                                     <div className="flex items-center gap-2 mb-1">
                                         <span className={typeLabel.class}>{typeLabel.text}</span>
                                         <span className="text-xs text-slate-500">
-                                            {new Date().toLocaleTimeString('id-ID')}
+                                            {new Date().toLocaleTimeString(t('timeFormat'))}
                                         </span>
                                     </div>
                                     <p className={`text-sm ${tx.status === 'error' ? 'text-red-600 dark:text-red-400' : 'text-slate-600 dark:text-slate-300'}`}>
@@ -105,7 +111,7 @@ export default function TransactionLog({ transactions }) {
                                             href={`https://sepolia.etherscan.io/tx/${tx.hash}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-xs text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 mt-2 inline-flex items-center gap-1"
+                                            className="text-xs text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 mt-2 inline-flex items-center gap-1 cursor-pointer"
                                         >
                                             <span className="font-mono">{formatAddress(tx.hash)}</span>
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -119,7 +125,7 @@ export default function TransactionLog({ transactions }) {
                             {/* Error Details for Bab IV Evidence */}
                             {tx.status === 'error' && (
                                 <div className="mt-3 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
-                                    <p className="text-xs text-red-600 dark:text-red-400 font-semibold mb-1">📋 Detail Error (Bukti Bab IV):</p>
+                                    <p className="text-xs text-red-600 dark:text-red-400 font-semibold mb-1">{t('detailErrorTitle')}</p>
                                     <code className="text-xs text-red-500 dark:text-red-300 break-all block">
                                         {tx.message}
                                     </code>

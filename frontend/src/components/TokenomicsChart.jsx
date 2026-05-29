@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { formatEther } from 'ethers';
+import { useLanguage } from '../context/LanguageContext';
 
 const TokenomicsChart = ({ contract, account, isRenounced }) => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userPercentage, setUserPercentage] = useState(0);
+    const { t } = useLanguage();
 
     const COLORS = ['#3b82f6', '#10b981']; // Blue for Public, Green for User/Whale
 
@@ -22,12 +24,12 @@ const TokenomicsChart = ({ contract, account, isRenounced }) => {
                 const userBalance = parseFloat(formatEther(userBalanceRaw));
                 const publicBalance = totalSupply - userBalance;
                 
-                const percentage = (userBalance / totalSupply) * 100;
+                const percentage = totalSupply > 0 ? (userBalance / totalSupply) * 100 : 0;
                 setUserPercentage(percentage);
 
                 setData([
-                    { name: 'Sisa Pasokan (Publik)', value: publicBalance },
-                    { name: 'Saldo Anda', value: userBalance },
+                    { name: t('supplyRemaining'), value: publicBalance },
+                    { name: t('userBalanceLabel'), value: userBalance },
                 ]);
             } catch (error) {
                 console.error("Error fetching tokenomics data:", error);
@@ -51,7 +53,7 @@ const TokenomicsChart = ({ contract, account, isRenounced }) => {
                 contract.off(filterFrom, fetchTokenData);
             };
         }
-    }, [contract, account]);
+    }, [contract, account, t]);
 
     if (!contract || !account) return null;
 
@@ -74,10 +76,10 @@ const TokenomicsChart = ({ contract, account, isRenounced }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                 </svg>
-                Tokenomics & Distribusi
+                {t('chartTitle')}
             </h2>
             <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
-                Menganalisis tingkat sentralisasi berdasarkan distribusi pasokan token saat ini.
+                {t('chartDesc')}
             </p>
 
             {isLoading ? (
@@ -111,7 +113,7 @@ const TokenomicsChart = ({ contract, account, isRenounced }) => {
                         {/* Center Text */}
                         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none pb-8">
                             <span className="text-2xl font-bold text-slate-900 dark:text-white">{userPercentage.toFixed(1)}%</span>
-                            <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider">Milik Anda</span>
+                            <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t('userPercentageLabel')}</span>
                         </div>
                     </div>
 
@@ -122,31 +124,28 @@ const TokenomicsChart = ({ contract, account, isRenounced }) => {
                                 <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                 </svg>
-                                Analisis Konsentrasi
+                                {t('concentrationAnalysis')}
                             </h3>
                             <p className="text-sm text-slate-600 dark:text-slate-300">
-                                Total Pasokan: <strong className="text-slate-900 dark:text-white">{(data[0]?.value + data[1]?.value)?.toLocaleString()} KYT</strong>
+                                {t('totalSupplyLabel', { supply: ((data[0]?.value || 0) + (data[1]?.value || 0))?.toLocaleString() })}
                             </p>
                             
                             {userPercentage > 50 ? (
                                 <div className="mt-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                                     <p className="text-xs text-red-600 dark:text-red-400 font-medium">
-                                        ⚠️ PERINGATAN: Risiko Manipulasi Tinggi!
+                                        {t('warningHighRiskTitle')}
                                     </p>
                                     <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-                                        Anda memegang <strong>{userPercentage.toFixed(1)}%</strong> dari total pasokan. 
-                                        Bahkan jika Anda sudah menekan <span className="text-slate-900 dark:text-white font-semibold">Renounce Ownership</span>, 
-                                        Anda masih bisa melakukan <em>dumping</em> (menjual besar-besaran) dan menghancurkan harga token. 
-                                        Ini membuktikan bahwa desentralisasi sejati membutuhkan distribusi token yang adil, bukan hanya melepas hak akses <em>Smart Contract</em>.
+                                        {t('warningHighRiskDesc', { percentage: userPercentage.toFixed(1) })}
                                     </p>
                                 </div>
                             ) : (
                                 <div className="mt-3 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
                                     <p className="text-xs text-green-600 dark:text-green-400 font-medium">
-                                        ✅ Distribusi Cukup Aman
+                                        {t('safeDistributionTitle')}
                                     </p>
                                     <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-                                        Kepemilikan Anda berada di bawah batas mayoritas. Distribusi token yang menyebar luas meminimalisir risiko manipulasi pasar oleh satu entitas (Whale).
+                                        {t('safeDistributionDesc')}
                                     </p>
                                 </div>
                             )}
