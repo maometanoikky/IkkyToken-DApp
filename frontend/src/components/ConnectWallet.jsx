@@ -127,17 +127,19 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
 
     if (account) {
         return (
-            <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4">
-                {networkName && (
-                    <span className="badge-info capitalize">{networkName}</span>
-                )}
-                <div className="glass rounded-xl px-4 py-2 flex items-center gap-3">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-slate-900 dark:text-white font-medium">{formatAddress(account)}</span>
+            <div className="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
+                <div className="flex w-full md:w-auto items-center gap-2 justify-between md:justify-start">
+                    {networkName && (
+                        <span className="badge-info capitalize py-2 px-3 text-xs md:text-sm font-semibold">{networkName}</span>
+                    )}
+                    <div className="glass rounded-xl px-4 py-2 flex items-center gap-2.5 flex-1 md:flex-none justify-center">
+                        <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.6)]"></div>
+                        <span className="text-slate-900 dark:text-white font-semibold text-xs md:text-sm tracking-wide">{formatAddress(account)}</span>
+                    </div>
                 </div>
                 <button
                     onClick={disconnectWallet}
-                    className="btn-secondary text-sm py-2 px-4 cursor-pointer"
+                    className="btn-secondary text-sm py-2.5 px-4 cursor-pointer w-full md:w-auto text-center justify-center font-bold"
                 >
                     {t('disconnect')}
                 </button>
@@ -146,11 +148,12 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
     }
 
     return (
-        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3">
+        <div className="flex flex-col md:flex-row items-center gap-2.5 w-full md:w-auto">
+            {/* Connect Wallet Button */}
             <button
                 onClick={connectWallet}
                 disabled={isConnecting}
-                className="btn-primary flex items-center gap-2 cursor-pointer"
+                className="btn-primary flex items-center justify-center gap-2.5 cursor-pointer w-full md:w-auto py-3 px-5 text-sm font-bold shadow-lg"
             >
                 {isConnecting ? (
                     <>
@@ -169,20 +172,24 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
                     </>
                 )}
             </button>
-            <button
-                onClick={switchToLocalhost}
-                className="btn-secondary text-sm py-2 px-4 cursor-pointer"
-                title="Switch to Localhost"
-            >
-                Localhost
-            </button>
-            <button
-                onClick={switchToSepolia}
-                className="btn-secondary text-sm py-2 px-4 cursor-pointer"
-                title="Switch to Sepolia Testnet"
-            >
-                Sepolia
-            </button>
+
+            {/* Network Buttons Row */}
+            <div className="flex w-full md:w-auto gap-2.5">
+                <button
+                    onClick={switchToLocalhost}
+                    className="btn-secondary flex-1 md:flex-none text-center justify-center text-sm py-2.5 px-4 cursor-pointer font-bold"
+                    title="Switch to Localhost"
+                >
+                    Localhost
+                </button>
+                <button
+                    onClick={switchToSepolia}
+                    className="btn-secondary flex-1 md:flex-none text-center justify-center text-sm py-2.5 px-4 cursor-pointer font-bold"
+                    title="Switch to Sepolia Testnet"
+                >
+                    Sepolia
+                </button>
+            </div>
         </div>
     );
 }

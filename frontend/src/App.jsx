@@ -356,40 +356,55 @@ function App() {
             {/* Premium Floating Header */}
             <div className={`px-4 pt-6 sticky ${isPaused && account ? 'top-12' : 'top-0'} z-40`}>
                 <header className="max-w-6xl mx-auto glass rounded-2xl border border-slate-300/50 dark:border-slate-700/50 shadow-xl transition-colors duration-300">
-                    <div className="px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div className="flex items-center gap-4">
-                            {/* Simple & Bold Custom Logo */}
-                            <div className="flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                                <svg width="48" height="48" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <linearGradient id="logo-gradient-bold" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stopColor="#0ea5e9" />
-                                            <stop offset="100%" stopColor="#10b981" />
-                                        </linearGradient>
-                                        <filter id="logo-glow-bold">
-                                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                                            <feMerge>
-                                                <feMergeNode in="coloredBlur"/>
-                                                <feMergeNode in="SourceGraphic"/>
-                                            </feMerge>
-                                        </filter>
-                                    </defs>
-                                    <g filter="url(#logo-glow-bold)">
-                                        <path d="M20 3L35 11.5V28.5L20 37L5 28.5V11.5L20 3Z" stroke="url(#logo-gradient-bold)" strokeWidth="2.5" fill="none" />
-                                        <path d="M20 10L29 15.5V25.5L20 31L11 25.5V15.5L20 10Z" stroke="url(#logo-gradient-bold)" strokeWidth="2" fill="none" />
-                                        <circle cx="20" cy="20.5" r="3.5" fill="url(#logo-gradient-bold)" />
-                                        <path d="M20 3L20 10 M35 11.5L29 15.5 M35 28.5L29 25.5 M20 37L20 31 M5 28.5L11 25.5 M5 11.5L11 15.5" stroke="url(#logo-gradient-bold)" strokeWidth="1.5" fill="none" />
-                                    </g>
-                                </svg>
+                    <div className="px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                        {/* Top Row on Mobile: Logo & Toggle Buttons */}
+                        <div className="flex items-center justify-between w-full md:w-auto gap-4">
+                            <div className="flex items-center gap-3">
+                                {/* Simple & Bold Custom Logo */}
+                                <div className="flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-pulse md:w-12 md:h-12">
+                                        <defs>
+                                            <linearGradient id="logo-gradient-bold" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stopColor="#0ea5e9" />
+                                                <stop offset="100%" stopColor="#10b981" />
+                                            </linearGradient>
+                                            <filter id="logo-glow-bold">
+                                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                                <feMerge>
+                                                    <feMergeNode in="coloredBlur"/>
+                                                    <feMergeNode in="SourceGraphic"/>
+                                                </feMerge>
+                                            </filter>
+                                        </defs>
+                                        <g filter="url(#logo-glow-bold)">
+                                            <path d="M20 3L35 11.5V28.5L20 37L5 28.5V11.5L20 3Z" stroke="url(#logo-gradient-bold)" strokeWidth="2.5" fill="none" />
+                                            <path d="M20 10L29 15.5V25.5L20 31L11 25.5V15.5L20 10Z" stroke="url(#logo-gradient-bold)" strokeWidth="2" fill="none" />
+                                            <circle cx="20" cy="20.5" r="3.5" fill="url(#logo-gradient-bold)" />
+                                            <path d="M20 3L20 10 M35 11.5L29 15.5 M35 28.5L29 25.5 M20 37L20 31 M5 28.5L11 25.5 M5 11.5L11 15.5" stroke="url(#logo-gradient-bold)" strokeWidth="1.5" fill="none" />
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h1 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white tracking-wide drop-shadow-md">{t('title')}</h1>
+                                    <p className="text-[10px] md:text-xs text-primary-600 dark:text-cyan-400 font-mono tracking-widest uppercase">{t('subtitle')}</p>
+                                </div>
                             </div>
-                            <div>
-                                <h1 className="text-xl font-bold text-slate-900 dark:text-white tracking-wide drop-shadow-md">{t('title')}</h1>
-                                <p className="text-xs text-primary-600 dark:text-cyan-400 font-mono tracking-widest uppercase">{t('subtitle')}</p>
+
+                            {/* Theme & Language Toggles placed here on Mobile for tight grid alignment */}
+                            <div className="flex md:hidden items-center gap-2">
+                                <ThemeToggle />
+                                <LanguageToggle />
                             </div>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <ThemeToggle />
-                            <LanguageToggle />
+
+                        {/* Actions Row: Toggles (Desktop only) and Connect Wallet */}
+                        <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+                            {/* Render Toggles on Desktop */}
+                            <div className="hidden md:flex items-center gap-3">
+                                <ThemeToggle />
+                                <LanguageToggle />
+                            </div>
+
                             <ConnectWallet
                                 account={account}
                                 setAccount={setAccount}
