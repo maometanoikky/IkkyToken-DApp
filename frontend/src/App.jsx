@@ -12,6 +12,7 @@ import TransferToken from './components/TransferToken';
 import TokenomicsChart from './components/TokenomicsChart';
 import ThemeToggle from './components/ThemeToggle';
 import LanguageToggle from './components/LanguageToggle';
+import Whitepaper from './components/Whitepaper';
 
 // Context
 import { useLanguage } from './context/LanguageContext';
@@ -39,6 +40,7 @@ function App() {
     const [isRenounced, setIsRenounced] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const [transactions, setTransactions] = useState([]);
+    const [activeTab, setActiveTab] = useState('dapp');
 
     // Loading Transition Overlay States
     const [isConnectingOverlay, setIsConnectingOverlay] = useState(false);
@@ -103,7 +105,7 @@ function App() {
             setLanguageProgress(0);
             setLanguageMessage(t('changingLanguage'));
 
-            // Smooth progress bar increments over 5 seconds (50ms * 100 = 5000ms)
+            // Smooth progress bar increments over 3 seconds (30ms * 100 = 3000ms)
             const interval = setInterval(() => {
                 setLanguageProgress(prev => {
                     if (prev >= 100) {
@@ -115,12 +117,12 @@ function App() {
                     }
                     return prev + 1;
                 });
-            }, 50);
+            }, 30);
 
             // Sequential translation messages
             const timer1 = setTimeout(() => {
                 setLanguageMessage(t('translatingInterface'));
-            }, 2500);
+            }, 1500);
 
             prevLanguageRef.current = language;
 
@@ -138,7 +140,7 @@ function App() {
             setProgressPercent(0);
             setConnectingMessage(t('connectingToNetwork'));
 
-            // Smooth progress bar increments over 7 seconds (70ms * 100 = 7000ms)
+            // Smooth progress bar increments over 4 seconds (40ms * 100 = 4000ms)
             const interval = setInterval(() => {
                 setProgressPercent(prev => {
                     if (prev >= 100) {
@@ -151,16 +153,16 @@ function App() {
                     }
                     return prev + 1;
                 });
-            }, 70);
+            }, 40);
 
             // Sequential loading messages
             const timer1 = setTimeout(() => {
                 setConnectingMessage(t('syncingBalances'));
-            }, 2500);
+            }, 1300);
 
             const timer2 = setTimeout(() => {
                 setConnectingMessage(t('verifyingSecurity'));
-            }, 5000);
+            }, 2600);
 
             return () => {
                 clearInterval(interval);
@@ -355,7 +357,7 @@ function App() {
 
             {/* Premium Floating Header */}
             <div className={`px-4 pt-6 sticky ${isPaused && account ? 'top-12' : 'top-0'} z-40`}>
-                <header className="max-w-6xl mx-auto glass rounded-2xl border border-slate-300/50 dark:border-slate-700/50 shadow-xl transition-colors duration-300">
+                <header className="max-w-[96%] mx-auto glass rounded-2xl border border-slate-300/50 dark:border-slate-700/50 shadow-xl transition-colors duration-300">
                     <div className="px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
                         {/* Top Row on Mobile: Logo & Toggle Buttons */}
                         <div className="flex items-center justify-between w-full md:w-auto gap-4">
@@ -397,6 +399,36 @@ function App() {
                             </div>
                         </div>
 
+                        {/* Navigation Tabs (Desktop only) */}
+                        <div className="hidden md:flex items-center gap-1 bg-slate-100/80 dark:bg-slate-900/60 p-1 rounded-xl border border-slate-200/50 dark:border-slate-800/50 shadow-inner">
+                            <button
+                                onClick={() => setActiveTab('dapp')}
+                                className={`px-4 py-1.5 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center gap-1.5 ${
+                                    activeTab === 'dapp'
+                                        ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
+                                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                                }`}
+                            >
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                                </svg>
+                                {t('tabDashboard')}
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('whitepaper')}
+                                className={`px-4 py-1.5 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center gap-1.5 ${
+                                    activeTab === 'whitepaper'
+                                        ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
+                                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                                }`}
+                            >
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                {t('tabWhitepaper')}
+                            </button>
+                        </div>
+
                         {/* Actions Row: Toggles (Desktop only) and Connect Wallet */}
                         <div className="flex items-center gap-3 w-full md:w-auto justify-end">
                             {/* Render Toggles on Desktop */}
@@ -412,13 +444,45 @@ function App() {
                                 setProvider={setProvider}
                             />
                         </div>
+
+                        {/* Navigation Tabs (Mobile only) */}
+                        <div className="flex md:hidden items-center justify-center w-full bg-slate-100/80 dark:bg-slate-900/60 p-1 rounded-xl border border-slate-200/50 dark:border-slate-800/50 mt-2">
+                            <button
+                                onClick={() => setActiveTab('dapp')}
+                                className={`flex-1 py-2 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-1.5 ${
+                                    activeTab === 'dapp'
+                                        ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
+                                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                                }`}
+                            >
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                                </svg>
+                                {t('tabDashboard')}
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('whitepaper')}
+                                className={`flex-1 py-2 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-1.5 ${
+                                    activeTab === 'whitepaper'
+                                        ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
+                                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                                }`}
+                            >
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                {t('tabWhitepaper')}
+                            </button>
+                        </div>
                     </div>
                 </header>
             </div>
 
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 py-8">
-                {!account ? (
+            <main className="max-w-[96%] mx-auto px-4 py-8">
+                {activeTab === 'whitepaper' ? (
+                    <Whitepaper />
+                ) : !account ? (
                     /* Not Connected State */
                     <div className="py-12 animate-slide-down-fade">
                         {/* Welcome Header */}
