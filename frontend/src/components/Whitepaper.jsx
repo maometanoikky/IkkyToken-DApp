@@ -431,17 +431,20 @@ contract IkkyToken is ERC20, Ownable, Pausable {
                                     <h4 className="font-bold text-slate-900 dark:text-white text-lg mt-4 mb-2">
                                         {currentText.solution.mechanismTitle}
                                     </h4>
-                                    <div className="relative border-l-2 border-slate-300 dark:border-slate-700 ml-4 pl-6 space-y-6">
+                                    <div className="grid grid-cols-1 gap-4">
                                         {currentText.solution.mechanismSteps.map((step, idx) => (
-                                            <div key={idx} className="relative">
-                                                {/* Bullet dot */}
-                                                <span className="absolute -left-[31px] top-1.5 flex h-4.5 w-4.5 rounded-full bg-emerald-500 border-4 border-slate-50 dark:border-slate-950"></span>
-                                                <h5 className="font-bold text-slate-900 dark:text-white text-base">
-                                                    {step.title}
-                                                </h5>
-                                                <p className="text-slate-600 dark:text-slate-400 text-sm mt-1 leading-relaxed">
-                                                    {step.desc}
-                                                </p>
+                                            <div key={idx} className="p-5 rounded-xl border border-emerald-500/20 bg-emerald-500/5 dark:bg-emerald-950/10 flex items-start gap-4 transition-all duration-300 hover:border-emerald-500/30">
+                                                <div className="h-8 w-8 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-mono font-bold flex-shrink-0 shadow-sm">
+                                                    {idx + 1}
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <h5 className="font-bold text-slate-900 dark:text-white text-base">
+                                                        {step.title}
+                                                    </h5>
+                                                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                                        {step.desc}
+                                                    </p>
+                                                </div>
                                             </div>
                                         ))}
                                     </div>
