@@ -437,11 +437,11 @@ contract IkkyToken is ERC20, Ownable, Pausable {
                                                 <div className="h-8 w-8 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-mono font-bold flex-shrink-0 shadow-sm">
                                                     {idx + 1}
                                                 </div>
-                                                <div className="space-y-1">
+                                                <div className="space-y-1 min-w-0 flex-1">
                                                     <h5 className="font-bold text-slate-900 dark:text-white text-base">
                                                         {step.title}
                                                     </h5>
-                                                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed break-all md:break-words">
                                                         {step.desc}
                                                     </p>
                                                 </div>
