@@ -4,7 +4,7 @@ export const translations = {
         title: "IkkyToken",
         subtitle: "Decentralized Asset",
         focus: "Fokus Skripsi: Pencegahan Kontrol Sentralistik pada Token ERC-20",
-        tabDashboard: "Dashboard DApp",
+        tabDashboard: "Beranda",
         tabWhitepaper: "Whitepaper",
         systemOnline: "SISTEM AKTIF",
         globalPause: "⚠️ PERHATIAN: SELURUH TRANSAKSI TOKEN SAAT INI SEDANG DIBEKUKAN OLEH ADMIN ⚠️",

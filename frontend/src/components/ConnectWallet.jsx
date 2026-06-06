@@ -1,18 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserProvider } from 'ethers';
 import { formatAddress, NETWORKS } from '../config/contract';
 import { useLanguage } from '../context/LanguageContext';
+import { toast } from 'react-hot-toast';
 
-/**
- * ConnectWallet Component
- * 
- * Komponen untuk menghubungkan wallet MetaMask.
- * Menampilkan tombol connect/disconnect dan alamat wallet.
- */
 export default function ConnectWallet({ account, setAccount, setSigner, setProvider }) {
     const [isConnecting, setIsConnecting] = useState(false);
     const [networkName, setNetworkName] = useState('');
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+
+    // Auto-connect and check for pending network toast
+    useEffect(() => {
+        const checkAutoConnect = async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        const provider = new BrowserProvider(window.ethereum);
+                        const signer = await provider.getSigner();
+                        const network = await provider.getNetwork();
+                        
+                        setProvider(provider);
+                        setSigner(signer);
+                        setAccount(accounts[0]);
+                        
+                        const actualNetworkName = network.name === 'unknown' ? 'Localhost' : network.name;
+                        setNetworkName(actualNetworkName);
+
+                        // If there was a pending network switch, show success toast
+                        const pendingSwitch = localStorage.getItem('pending_network_toast');
+                        if (pendingSwitch) {
+                            toast.success(
+                                language === 'id'
+                                    ? `Berhasil beralih ke jaringan ${actualNetworkName}!`
+                                    : `Successfully switched to ${actualNetworkName} network!`
+                            );
+                            localStorage.removeItem('pending_network_toast');
+                        }
+                    }
+                } catch (err) {
+                    console.error("Auto connect error:", err);
+                }
+            }
+        };
+        checkAutoConnect();
+    }, [language, setAccount, setProvider, setSigner]);
 
     const connectWallet = async () => {
         if (typeof window.ethereum === 'undefined') {
@@ -85,32 +117,70 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
     };
 
     const switchToSepolia = async () => {
+        const toastId = toast.loading(
+            language === 'id'
+                ? "Meminta beralih ke jaringan Sepolia..."
+                : "Requesting switch to Sepolia network..."
+        );
+        localStorage.setItem('pending_network_toast', 'sepolia');
         try {
             await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
                 params: [{ chainId: NETWORKS.sepolia.chainId }]
             });
+            toast.success(
+                language === 'id' ? "Berhasil beralih ke Sepolia!" : "Successfully switched to Sepolia!",
+                { id: toastId }
+            );
+            localStorage.removeItem('pending_network_toast');
         } catch (error) {
-            // If the chain is not added, add it
             if (error.code === 4902) {
                 try {
                     await window.ethereum.request({
                         method: 'wallet_addEthereumChain',
                         params: [NETWORKS.sepolia]
                     });
+                    toast.success(
+                        language === 'id' ? "Berhasil menambahkan & beralih ke Sepolia!" : "Successfully added & switched to Sepolia!",
+                        { id: toastId }
+                    );
+                    localStorage.removeItem('pending_network_toast');
                 } catch (addError) {
                     console.error('Error adding network:', addError);
+                    toast.error(
+                        language === 'id' ? `Gagal menambahkan jaringan Sepolia: ${addError.message}` : `Failed to add Sepolia network: ${addError.message}`,
+                        { id: toastId }
+                    );
+                    localStorage.removeItem('pending_network_toast');
                 }
+            } else {
+                console.error('Error switching network:', error);
+                toast.error(
+                    language === 'id' ? `Gagal mengalihkan jaringan: ${error.message}` : `Failed to switch network: ${error.message}`,
+                    { id: toastId }
+                );
+                localStorage.removeItem('pending_network_toast');
             }
         }
     };
 
     const switchToLocalhost = async () => {
+        const toastId = toast.loading(
+            language === 'id'
+                ? "Meminta beralih ke jaringan Localhost..."
+                : "Requesting switch to Localhost network..."
+        );
+        localStorage.setItem('pending_network_toast', 'localhost');
         try {
             await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
                 params: [{ chainId: NETWORKS.localhost.chainId }]
             });
+            toast.success(
+                language === 'id' ? "Berhasil beralih ke Localhost!" : "Successfully switched to Localhost!",
+                { id: toastId }
+            );
+            localStorage.removeItem('pending_network_toast');
         } catch (error) {
             if (error.code === 4902) {
                 try {
@@ -118,9 +188,26 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
                         method: 'wallet_addEthereumChain',
                         params: [NETWORKS.localhost]
                     });
+                    toast.success(
+                        language === 'id' ? "Berhasil menambahkan & beralih ke Localhost!" : "Successfully added & switched to Localhost!",
+                        { id: toastId }
+                    );
+                    localStorage.removeItem('pending_network_toast');
                 } catch (addError) {
                     console.error('Error adding network:', addError);
+                    toast.error(
+                        language === 'id' ? `Gagal menambahkan jaringan Localhost: ${addError.message}` : `Failed to add Localhost network: ${addError.message}`,
+                        { id: toastId }
+                    );
+                    localStorage.removeItem('pending_network_toast');
                 }
+            } else {
+                console.error('Error switching network:', error);
+                toast.error(
+                    language === 'id' ? `Gagal mengalihkan jaringan: ${error.message}` : `Failed to switch network: ${error.message}`,
+                    { id: toastId }
+                );
+                localStorage.removeItem('pending_network_toast');
             }
         }
     };
