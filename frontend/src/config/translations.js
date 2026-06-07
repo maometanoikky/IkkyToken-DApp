@@ -166,7 +166,7 @@ export const translations = {
         title: "IkkyToken",
         subtitle: "Decentralized Asset",
         focus: "Thesis Focus: Centralized Control Prevention on ERC-20 Tokens",
-        tabDashboard: "DApp Dashboard",
+        tabDashboard: "Home Page",
         tabWhitepaper: "Whitepaper",
         systemOnline: "SYSTEM ONLINE",
         globalPause: "⚠️ WARNING: ALL TOKEN TRANSACTIONS ARE CURRENTLY FROZEN BY THE ADMIN ⚠️",

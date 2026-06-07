@@ -7,12 +7,34 @@ import { toast } from 'react-hot-toast';
 export default function ConnectWallet({ account, setAccount, setSigner, setProvider }) {
     const [isConnecting, setIsConnecting] = useState(false);
     const [networkName, setNetworkName] = useState('');
+    const [currentChainId, setCurrentChainId] = useState('');
+    const [switchingTo, setSwitchingTo] = useState('');
     const { t, language } = useLanguage();
+
+    // Fetch and listen for MetaMask network changes (even when disconnected)
+    useEffect(() => {
+        const fetchChainId = async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                    if (chainId) {
+                        setCurrentChainId(chainId.toLowerCase());
+                    }
+                } catch (err) {
+                    console.error("Error fetching chainId:", err);
+                }
+            }
+        };
+        fetchChainId();
+    }, []);
 
     // Auto-connect and check for pending network toast
     useEffect(() => {
         const checkAutoConnect = async () => {
             if (typeof window.ethereum !== 'undefined') {
+                const isConnected = localStorage.getItem('wallet_connected') === 'true';
+                if (!isConnected) return;
+
                 try {
                     const accounts = await window.ethereum.request({ method: 'eth_accounts' });
                     if (accounts.length > 0) {
@@ -82,19 +104,8 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
             setAccount(accounts[0]);
             setNetworkName(network.name === 'unknown' ? 'Localhost' : network.name);
 
-            // Listen for account changes
-            window.ethereum.on('accountsChanged', (newAccounts) => {
-                if (newAccounts.length === 0) {
-                    disconnectWallet();
-                } else {
-                    setAccount(newAccounts[0]);
-                }
-            });
-
-            // Listen for network changes
-            window.ethereum.on('chainChanged', () => {
-                window.location.reload();
-            });
+            // Set localStorage flag
+            localStorage.setItem('wallet_connected', 'true');
 
         } catch (error) {
             console.error('Error connecting wallet:', error);
@@ -114,9 +125,35 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
         setSigner(null);
         setProvider(null);
         setNetworkName('');
+        localStorage.removeItem('wallet_connected');
     };
 
+    // Listen to account and network changes when connected or mounted
+    useEffect(() => {
+        if (typeof window.ethereum !== 'undefined') {
+            const handleAccounts = (newAccounts) => {
+                if (newAccounts.length === 0) {
+                    disconnectWallet();
+                } else {
+                    setAccount(newAccounts[0]);
+                }
+            };
+            const handleChain = () => {
+                window.location.reload();
+            };
+
+            window.ethereum.on('accountsChanged', handleAccounts);
+            window.ethereum.on('chainChanged', handleChain);
+
+            return () => {
+                window.ethereum.removeListener('accountsChanged', handleAccounts);
+                window.ethereum.removeListener('chainChanged', handleChain);
+            };
+        }
+    }, [setAccount]);
+
     const switchToSepolia = async () => {
+        setSwitchingTo('sepolia');
         const toastId = toast.loading(
             language === 'id'
                 ? "Meminta beralih ke jaringan Sepolia..."
@@ -161,10 +198,13 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
                 );
                 localStorage.removeItem('pending_network_toast');
             }
+        } finally {
+            setSwitchingTo('');
         }
     };
 
     const switchToLocalhost = async () => {
+        setSwitchingTo('localhost');
         const toastId = toast.loading(
             language === 'id'
                 ? "Meminta beralih ke jaringan Localhost..."
@@ -209,6 +249,8 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
                 );
                 localStorage.removeItem('pending_network_toast');
             }
+        } finally {
+            setSwitchingTo('');
         }
     };
 
@@ -236,10 +278,54 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
 
     return (
         <div className="flex flex-col md:flex-row items-center gap-2.5 w-full md:w-auto">
+            {/* Network Buttons Row */}
+            <div className="flex w-full md:w-auto gap-2.5">
+                <button
+                    onClick={switchToLocalhost}
+                    disabled={switchingTo !== '' || isConnecting}
+                    className={`${
+                        currentChainId === NETWORKS.localhost.chainId.toLowerCase()
+                            ? 'btn-primary bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)] border-none'
+                            : 'btn-secondary text-slate-800 dark:text-white'
+                    } flex-1 md:flex-none text-center justify-center text-sm py-2.5 px-4 cursor-pointer font-bold transition-all duration-300 transform active:scale-95`}
+                    title="Switch to Localhost"
+                >
+                    {switchingTo === 'localhost' ? (
+                        <span className="flex items-center gap-1.5 justify-center">
+                            <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                            </svg>
+                            Localhost...
+                        </span>
+                    ) : 'Localhost'}
+                </button>
+                <button
+                    onClick={switchToSepolia}
+                    disabled={switchingTo !== '' || isConnecting}
+                    className={`${
+                        currentChainId === NETWORKS.sepolia.chainId.toLowerCase()
+                            ? 'btn-primary bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)] border-none'
+                            : 'btn-secondary text-slate-800 dark:text-white'
+                    } flex-1 md:flex-none text-center justify-center text-sm py-2.5 px-4 cursor-pointer font-bold transition-all duration-300 transform active:scale-95`}
+                    title="Switch to Sepolia Testnet"
+                >
+                    {switchingTo === 'sepolia' ? (
+                        <span className="flex items-center gap-1.5 justify-center">
+                            <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                            </svg>
+                            Sepolia...
+                        </span>
+                    ) : 'Sepolia'}
+                </button>
+            </div>
+
             {/* Connect Wallet Button */}
             <button
                 onClick={connectWallet}
-                disabled={isConnecting}
+                disabled={isConnecting || switchingTo !== ''}
                 className="btn-primary flex items-center justify-center gap-2.5 cursor-pointer w-full md:w-auto py-3 px-5 text-sm font-bold shadow-lg"
             >
                 {isConnecting ? (
@@ -259,24 +345,6 @@ export default function ConnectWallet({ account, setAccount, setSigner, setProvi
                     </>
                 )}
             </button>
-
-            {/* Network Buttons Row */}
-            <div className="flex w-full md:w-auto gap-2.5">
-                <button
-                    onClick={switchToLocalhost}
-                    className="btn-secondary flex-1 md:flex-none text-center justify-center text-sm py-2.5 px-4 cursor-pointer font-bold"
-                    title="Switch to Localhost"
-                >
-                    Localhost
-                </button>
-                <button
-                    onClick={switchToSepolia}
-                    className="btn-secondary flex-1 md:flex-none text-center justify-center text-sm py-2.5 px-4 cursor-pointer font-bold"
-                    title="Switch to Sepolia Testnet"
-                >
-                    Sepolia
-                </button>
-            </div>
         </div>
     );
 }

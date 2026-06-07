@@ -13,7 +13,6 @@ import TokenomicsChart from './components/TokenomicsChart';
 import ThemeToggle from './components/ThemeToggle';
 import LanguageToggle from './components/LanguageToggle';
 import Whitepaper from './components/Whitepaper';
-
 // Context
 import { useLanguage } from './context/LanguageContext';
 
@@ -399,35 +398,37 @@ function App() {
                             </div>
                         </div>
 
-                        {/* Navigation Tabs (Desktop only) */}
-                        <div className="hidden md:flex items-center gap-1 bg-slate-100/80 dark:bg-slate-900/60 p-1 rounded-xl border border-slate-200/50 dark:border-slate-800/50 shadow-inner">
-                            <button
-                                onClick={() => setActiveTab('dapp')}
-                                className={`px-4 py-1.5 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center gap-1.5 ${
-                                    activeTab === 'dapp'
-                                        ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
-                                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                                }`}
-                            >
-                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
-                                </svg>
-                                {t('tabDashboard')}
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('whitepaper')}
-                                className={`px-4 py-1.5 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center gap-1.5 ${
-                                    activeTab === 'whitepaper'
-                                        ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
-                                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                                }`}
-                            >
-                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                                {t('tabWhitepaper')}
-                            </button>
-                        </div>
+                        {/* Navigation Tabs (Desktop only, visible only when NOT connected) */}
+                        {!account && (
+                            <div className="hidden md:flex items-center gap-1 bg-slate-100/80 dark:bg-slate-900/60 p-1 rounded-xl border border-slate-200/50 dark:border-slate-800/50 shadow-inner">
+                                <button
+                                    onClick={() => setActiveTab('dapp')}
+                                    className={`px-4 py-1.5 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center gap-1.5 ${
+                                        activeTab === 'dapp'
+                                            ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
+                                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                                    }`}
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                                    </svg>
+                                    {t('tabDashboard')}
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('whitepaper')}
+                                    className={`px-4 py-1.5 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center gap-1.5 ${
+                                        activeTab === 'whitepaper'
+                                            ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
+                                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                                    }`}
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                    {t('tabWhitepaper')}
+                                </button>
+                            </div>
+                        )}
 
                         {/* Actions Row: Toggles (Desktop only) and Connect Wallet */}
                         <div className="flex items-center gap-3 w-full md:w-auto justify-end">
@@ -445,46 +446,49 @@ function App() {
                             />
                         </div>
 
-                        {/* Navigation Tabs (Mobile only) */}
-                        <div className="flex md:hidden items-center justify-center w-full bg-slate-100/80 dark:bg-slate-900/60 p-1 rounded-xl border border-slate-200/50 dark:border-slate-800/50 mt-2">
-                            <button
-                                onClick={() => setActiveTab('dapp')}
-                                className={`flex-1 py-2 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-1.5 ${
-                                    activeTab === 'dapp'
-                                        ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
-                                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                                }`}
-                            >
-                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
-                                </svg>
-                                {t('tabDashboard')}
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('whitepaper')}
-                                className={`flex-1 py-2 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-1.5 ${
-                                    activeTab === 'whitepaper'
-                                        ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
-                                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                                }`}
-                            >
-                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                                {t('tabWhitepaper')}
-                            </button>
-                        </div>
+                        {/* Navigation Tabs (Mobile only, visible only when NOT connected) */}
+                        {!account && (
+                            <div className="flex md:hidden items-center justify-center w-full bg-slate-100/80 dark:bg-slate-900/60 p-1 rounded-xl border border-slate-200/50 dark:border-slate-800/50 mt-2">
+                                <button
+                                    onClick={() => setActiveTab('dapp')}
+                                    className={`flex-1 py-2 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-1.5 ${
+                                        activeTab === 'dapp'
+                                            ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
+                                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                                    }`}
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                                    </svg>
+                                    {t('tabDashboard')}
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('whitepaper')}
+                                    className={`flex-1 py-2 rounded-lg font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-1.5 ${
+                                        activeTab === 'whitepaper'
+                                            ? 'bg-gradient-to-r from-cyan-500 to-emerald-500 text-white shadow-md'
+                                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                                    }`}
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                    {t('tabWhitepaper')}
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </header>
             </div>
 
             {/* Main Content */}
             <main className="max-w-[96%] mx-auto px-4 py-8">
-                {activeTab === 'whitepaper' ? (
-                    <Whitepaper />
-                ) : !account ? (
+                {!account ? (
                     /* Not Connected State */
-                    <div className="py-12 animate-slide-down-fade">
+                    activeTab === 'whitepaper' ? (
+                        <Whitepaper />
+                    ) : (
+                        <div className="py-12 animate-slide-down-fade">
                         {/* Welcome Header */}
                         <div className="text-center mb-16">
                             <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary-500/20 to-accent-500/20 flex items-center justify-center glow">
@@ -606,6 +610,7 @@ function App() {
                             </div>
                         </div>
                     </div>
+                    )
                 ) : !isContractConfigured ? (
                     /* Contract Not Configured */
                     <div className="text-center py-20 animate-slide-down-fade">
