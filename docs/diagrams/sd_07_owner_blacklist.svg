@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="883" viewBox="0 0 850 883">
+  <defs>
+    <!-- Solid Arrow Marker -->
+    <marker id="arrow-solid" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0f172a" />
+    </marker>
+    <!-- Return Arrow Marker -->
+    <marker id="arrow-return" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#334155" />
+    </marker>
+    <!-- Drop Shadow Filter for Lifelines -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#94a3b8" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+  
+  <!-- Diagram Title -->
+  <text x="425" y="30" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="bold" fill="#0f172a" text-anchor="middle">SD-07: Owner Mengelola Status Blacklist Alamat</text>
+
+  <!-- Lifeline Vertical Dashed Lines (Start at y1=90 to avoid crossing boxes) -->
+  <line x1="80" y1="90" x2="80" y2="1067" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4" />
+  <line x1="280" y1="90" x2="280" y2="1067" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4" />
+  <line x1="480" y1="90" x2="480" y2="1067" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4" />
+  <line x1="680" y1="90" x2="680" y2="1067" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4" />
+
+  <!-- Lifeline Boxes -->
+  <!-- 1. Actor -->
+  <g filter="url(#shadow)">
+    <rect x="20" y="50" width="120" height="40" rx="6" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="80" y="74" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">Owner / Developer</text>
+  </g>
+  <!-- 2. Frontend DApp -->
+  <g filter="url(#shadow)">
+    <rect x="220" y="50" width="120" height="40" rx="6" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="280" y="74" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">Frontend DApp</text>
+  </g>
+  <!-- 3. MetaMask -->
+  <g filter="url(#shadow)">
+    <rect x="420" y="50" width="120" height="40" rx="6" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="480" y="74" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">MetaMask Wallet</text>
+  </g>
+  <!-- 4. Smart Contract -->
+  <g filter="url(#shadow)">
+    <rect x="620" y="50" width="120" height="40" rx="6" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="680" y="74" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">Smart Contract</text>
+  </g>
+
+  <!-- Activation Bars (Focus of Control) -->
+  <rect x="75" y="100" width="10" height="695" fill="#e2e8f0" stroke="#475569" stroke-width="1" />
+  <rect x="275" y="100" width="10" height="695" fill="#e2e8f0" stroke="#475569" stroke-width="1" />
+  <rect x="475" y="195" width="10" height="493" fill="#e2e8f0" stroke="#475569" stroke-width="1" />
+  <rect x="675" y="471" width="10" height="162" fill="#e2e8f0" stroke="#475569" stroke-width="1" />
+
+  <!-- Messages & Self-Calls -->
+  
+  <!-- 1. Input Target & Click -->
+  <g>
+    <line x1="85" y1="114" x2="275" y2="114" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="180" y="104" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">1. Input Alamat Target, Klik "Blacklist"/"Unblacklist"</text>
+  </g>
+
+  <!-- 2. Self-validation -->
+  <g>
+    <path d="M 285,141 C 315,141 315,168 285,168" fill="none" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="320" y="159" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">2. Validasi format alamat</text>
+  </g>
+
+  <!-- 3. Request Send Transaction -->
+  <g>
+    <line x1="285" y1="208" x2="475" y2="208" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="380" y="199" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">3. Panggil blacklist() / unblacklist()</text>
+  </g>
+
+  <!-- 4. Tampilkan Gas Fee & Persetujuan -->
+  <g>
+    <line x1="475" y1="249" x2="85" y2="249" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="280" y="239" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">4. Tampilkan Konfirmasi Transaksi</text>
+  </g>
+
+  <!-- 5. Konfirmasi Transaksi (Approve) -->
+  <g>
+    <line x1="85" y1="303" x2="475" y2="303" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="280" y="293" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">5. Setujui Transaksi (Sign)</text>
+  </g>
+
+  <!-- 6. Return Transaction Hash (txHash) -->
+  <g>
+    <line x1="475" y1="357" x2="285" y2="357" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-return)" />
+    <text x="380" y="347" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">6. Return Transaction Hash (txHash)</text>
+  </g>
+
+  <!-- 7. Tampilkan Status Pending di UI -->
+  <g>
+    <line x1="275" y1="404" x2="85" y2="404" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-return)" />
+    <text x="180" y="394" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">7. Tampilkan Status "Pending"</text>
+  </g>
+
+  <!-- 8. Kirim Transaksi ke Blockchain -->
+  <g>
+    <line x1="485" y1="485" x2="675" y2="485" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="580" y="475" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">8. Eksekusi blacklist() / unblacklist()</text>
+  </g>
+
+  <!-- 9. Modifier Check (onlyOwner) -->
+  <g>
+    <path d="M 685,498 C 715,498 715,525 685,525" fill="none" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="720" y="517" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">9. Cek onlyOwner</text>
+  </g>
+
+  <!-- 10. Update Blacklist State & Emit Event -->
+  <g>
+    <path d="M 685,552 C 715,552 715,579 685,579" fill="none" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="720" y="571" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">10. Update mapping &amp; Emit Event</text>
+  </g>
+
+  <!-- 11. Transaksi Mined -->
+  <g>
+    <line x1="675" y1="620" x2="485" y2="620" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-return)" />
+    <text x="580" y="610" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">11. Transaksi Mined</text>
+  </g>
+
+  <!-- 12. Kirim Resi Transaksi (Receipt) -->
+  <g>
+    <line x1="475" y1="667" x2="285" y2="667" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-return)" />
+    <text x="380" y="658" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">12. Kirim Resi Transaksi (Receipt)</text>
+  </g>
+
+  <!-- 13. Self Update UI Status -->
+  <g>
+    <path d="M 285,701 C 315,701 315,728 285,728" fill="none" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="320" y="720" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="start">13. Update daftar blacklist di UI</text>
+  </g>
+
+  <!-- 14. Tampilkan Notifikasi Sukses -->
+  <g>
+    <line x1="275" y1="775" x2="85" y2="775" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-return)" />
+    <text x="180" y="766" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">14. Tampilkan Notifikasi Sukses</text>
+  </g>
+</svg>

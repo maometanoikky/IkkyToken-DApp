@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="720" viewBox="0 0 850 720">
+  <defs>
+    <!-- Solid Arrow Marker -->
+    <marker id="arrow-solid" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" fill="#0f172a" />
+    </marker>
+    <!-- Drop Shadow Filter for Swimlanes -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#94a3b8" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+  
+  <!-- Title -->
+  <text x="425" y="30" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="bold" fill="#0f172a" text-anchor="middle">AD-08: Owner Melepaskan Kepemilikan Permanent (Renounce)</text>
+
+  <!-- Swimlane Header Backgrounds -->
+  <rect x="50" y="50" width="180" height="40" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="230" y="50" width="190" height="40" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="420" y="50" width="190" height="40" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="610" y="50" width="190" height="40" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <!-- Swimlane Header Texts -->
+  <text x="140" y="75" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">Aktor (Owner / Developer)</text>
+  <text x="325" y="75" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0f766e" text-anchor="middle">Frontend DApp (UI)</text>
+  <text x="515" y="75" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#c2410c" text-anchor="middle">MetaMask Wallet</text>
+  <text x="705" y="75" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#4f46e5" text-anchor="middle">Smart Contract</text>
+
+  <!-- Swimlane Vertical Boundaries -->
+  <line x1="50" y1="90" x2="50" y2="690" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="230" y1="90" x2="230" y2="690" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="420" y1="90" x2="420" y2="690" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="610" y1="90" x2="610" y2="690" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="800" y1="90" x2="800" y2="690" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <!-- Start Node -->
+  <circle cx="140" cy="115" r="9" fill="#0f172a" />
+  <line x1="140" y1="124" x2="140" y2="145" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 1: Klik Renounce -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="145" width="160" height="40" rx="6" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.8" />
+    <text x="140" y="162" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">Klik "Renounce</text>
+    <text x="140" y="176" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">Ownership Permanently"</text>
+  </g>
+  <line x1="220" y1="165" x2="245" y2="165" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 2: Tampilkan Peringatan Keras -->
+  <g filter="url(#shadow)">
+    <rect x="245" y="145" width="160" height="40" rx="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8" />
+    <text x="325" y="162" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">Tampilkan Pop-up</text>
+    <text x="325" y="176" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">Peringatan Risiko Keras</text>
+  </g>
+  
+  <!-- Arrow from Warning pop-up back to Owner's decision node -->
+  <path d="M 325,185 L 325,205 L 140,205 L 140,215" fill="none" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Decision 1: Konfirmasi Setujui Risiko? -->
+  <g>
+    <polygon points="140,215 180,240 140,265 100,240" fill="#fef9c3" stroke="#d97706" stroke-width="1.8" />
+    <text x="140" y="244" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">Setuju Risiko?</text>
+  </g>
+
+  <!-- Decision 1 Branch: NO -->
+  <line x1="100" y1="240" x2="80" y2="240" stroke="#0f172a" stroke-width="1.5" />
+  <line x1="80" y1="240" x2="80" y2="266" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="85" y="233" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#ef4444">Tidak</text>
+
+  <!-- End Node (Gagal) -->
+  <g>
+    <circle cx="80" cy="275" r="9" fill="none" stroke="#0f172a" stroke-width="1.5" />
+    <circle cx="80" cy="275" r="5" fill="#0f172a" />
+  </g>
+
+  <!-- Decision 1 Branch: YES -->
+  <path d="M 140,265 L 140,300 L 245,300" fill="none" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="148" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#22c55e">Ya</text>
+
+  <!-- Action 3: Panggil renounceOwnershipPermanently() -->
+  <g filter="url(#shadow)">
+    <rect x="245" y="280" width="160" height="40" rx="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8" />
+    <text x="325" y="297" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">Panggil</text>
+    <text x="325" y="311" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">renounceOwnership()</text>
+  </g>
+  <line x1="405" y1="300" x2="435" y2="300" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 4: Request MetaMask Sign -->
+  <g filter="url(#shadow)">
+    <rect x="435" y="280" width="160" height="40" rx="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.8" />
+    <text x="515" y="304" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Request Sign Transaksi</text>
+  </g>
+
+  <!-- Arrow from MetaMask sign request to Owner decision 2 (confirm transaction) -->
+  <path d="M 515,320 L 515,340 L 140,340 L 140,355" fill="none" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Decision 2: Setujui Transaksi? -->
+  <g>
+    <polygon points="140,355 180,380 140,405 100,380" fill="#fef9c3" stroke="#d97706" stroke-width="1.8" />
+    <text x="140" y="384" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">Setuju Sign?</text>
+  </g>
+
+  <!-- Decision 2 Branch: NO -->
+  <line x1="100" y1="380" x2="80" y2="380" stroke="#0f172a" stroke-width="1.5" />
+  <line x1="80" y1="380" x2="80" y2="406" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="85" y="373" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#ef4444">Tidak</text>
+
+  <!-- End Node 2 (Gagal) -->
+  <g>
+    <circle cx="80" cy="415" r="9" fill="none" stroke="#0f172a" stroke-width="1.5" />
+    <circle cx="80" cy="415" r="5" fill="#0f172a" />
+  </g>
+
+  <!-- Decision 2 Branch: YES -->
+  <path d="M 140,405 L 140,460 L 245,460" fill="none" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="148" y="420" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#22c55e">Ya</text>
+
+  <!-- Action 5: DApp Tampilkan Pending -->
+  <g filter="url(#shadow)">
+    <rect x="245" y="440" width="160" height="40" rx="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8" />
+    <text x="325" y="464" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Tampilkan Status "Pending"</text>
+  </g>
+
+  <!-- Signer also triggers MetaMask to Broadcast -->
+  <path d="M 325,440 L 325,420 L 515,420 L 515,440" fill="none" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 6: MetaMask Broadcast Transaksi -->
+  <g filter="url(#shadow)">
+    <rect x="435" y="440" width="160" height="40" rx="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.8" />
+    <text x="515" y="464" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Sign &amp; Kirim Transaksi</text>
+  </g>
+  <line x1="595" y1="460" x2="625" y2="460" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 7: Smart Contract Eksekusi -->
+  <g filter="url(#shadow)">
+    <rect x="625" y="440" width="160" height="40" rx="6" fill="#f5f3ff" stroke="#6366f1" stroke-width="1.8" />
+    <text x="705" y="464" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Eksekusi Renounce</text>
+  </g>
+  <line x1="705" y1="480" x2="705" y2="495" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Decision 3: Pemanggil Adalah Owner? (onlyOwner) -->
+  <g>
+    <polygon points="705,495 745,520 705,545 665,520" fill="#fef9c3" stroke="#d97706" stroke-width="1.8" />
+    <text x="705" y="524" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">onlyOwner?</text>
+  </g>
+
+  <!-- Decision 3 Branch: NO (Revert) -->
+  <line x1="745" y1="520" x2="775" y2="520" stroke="#0f172a" stroke-width="1.5" />
+  <line x1="775" y1="520" x2="775" y2="546" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="752" y="512" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#ef4444">Tidak</text>
+
+  <!-- End Node 3 (Revert) -->
+  <g>
+    <circle cx="775" cy="555" r="9" fill="none" stroke="#0f172a" stroke-width="1.5" />
+    <circle cx="775" cy="555" r="5" fill="#0f172a" />
+  </g>
+
+  <!-- Decision 3 Branch: YES -->
+  <line x1="705" y1="545" x2="705" y2="570" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="713" y="555" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#22c55e">Ya</text>
+
+  <!-- Action 8: Set Owner = 0x0 & _ownershipRenounced = true -->
+  <g filter="url(#shadow)">
+    <rect x="625" y="570" width="160" height="40" rx="6" fill="#f5f3ff" stroke="#6366f1" stroke-width="1.8" />
+    <text x="705" y="587" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">Set Owner = 0x0 &amp;</text>
+    <text x="705" y="601" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">Emit Event</text>
+  </g>
+  <line x1="625" y1="590" x2="595" y2="590" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 9: Kirim Resi Transaksi (Receipt) -->
+  <g filter="url(#shadow)">
+    <rect x="435" y="570" width="160" height="40" rx="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.8" />
+    <text x="515" y="594" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Kirim Resi (Receipt)</text>
+  </g>
+  <line x1="435" y1="590" x2="405" y2="590" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 10: Sembunyikan Panel Admin secara permanen -->
+  <g filter="url(#shadow)">
+    <rect x="245" y="570" width="160" height="40" rx="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8" />
+    <text x="325" y="587" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">Sembunyikan Admin Panel</text>
+    <text x="325" y="601" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">&amp; Tampilkan Notif Sukses</text>
+  </g>
+  
+  <!-- Flow from Pending action to UI update action (pending state resolved) -->
+  <line x1="325" y1="480" x2="325" y2="570" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <line x1="325" y1="610" x2="325" y2="655" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- End Node (Sukses) -->
+  <g>
+    <circle cx="325" cy="665" r="9" fill="none" stroke="#0f172a" stroke-width="1.5" />
+    <circle cx="325" cy="665" r="5" fill="#0f172a" />
+  </g>
+</svg>

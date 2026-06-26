@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="660" viewBox="0 0 850 660">
+  <defs>
+    <!-- Solid Arrow Marker -->
+    <marker id="arrow-solid" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" fill="#0f172a" />
+    </marker>
+    <!-- Drop Shadow Filter for Swimlanes -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#94a3b8" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+  
+  <!-- Title -->
+  <text x="425" y="30" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="bold" fill="#0f172a" text-anchor="middle">AD-03: User Melakukan Transfer Token KYT</text>
+
+  <!-- Swimlane Header Backgrounds -->
+  <rect x="50" y="50" width="180" height="40" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="230" y="50" width="190" height="40" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="420" y="50" width="190" height="40" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="610" y="50" width="190" height="40" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <!-- Swimlane Header Texts -->
+  <text x="140" y="75" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">Aktor (User / Investor)</text>
+  <text x="325" y="75" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0f766e" text-anchor="middle">Frontend DApp (UI)</text>
+  <text x="515" y="75" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#c2410c" text-anchor="middle">MetaMask Wallet</text>
+  <text x="705" y="75" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#4f46e5" text-anchor="middle">Smart Contract</text>
+
+  <!-- Swimlane Vertical Boundaries -->
+  <line x1="50" y1="90" x2="50" y2="630" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="230" y1="90" x2="230" y2="630" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="420" y1="90" x2="420" y2="630" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="610" y1="90" x2="610" y2="630" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="800" y1="90" x2="800" y2="630" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <!-- Start Node -->
+  <circle cx="140" cy="115" r="9" fill="#0f172a" />
+  <line x1="140" y1="124" x2="140" y2="145" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 1: Input & Klik Transfer -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="145" width="160" height="40" rx="6" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.8" />
+    <text x="140" y="162" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">Input Penerima &amp; Jumlah,</text>
+    <text x="140" y="176" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" fill="#0f172a" text-anchor="middle">Klik "Transfer"</text>
+  </g>
+  <line x1="220" y1="165" x2="245" y2="165" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 2: Validasi Form (Frontend) -->
+  <g filter="url(#shadow)">
+    <rect x="245" y="145" width="160" height="40" rx="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8" />
+    <text x="325" y="169" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Validasi Alamat &amp; Saldo</text>
+  </g>
+  <line x1="325" y1="185" x2="325" y2="200" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Decision 1: Valid? -->
+  <g>
+    <polygon points="325,200 365,225 325,250 285,225" fill="#fef9c3" stroke="#d97706" stroke-width="1.8" />
+    <text x="325" y="229" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0f172a" text-anchor="middle">Valid?</text>
+  </g>
+
+  <!-- Decision 1 Branch: NO (Tampilkan Error) -->
+  <line x1="325" y1="250" x2="325" y2="280" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="333" y="262" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#ef4444">Tidak</text>
+
+  <!-- Action 3: Tampilkan Pesan Error -->
+  <g filter="url(#shadow)">
+    <rect x="245" y="280" width="160" height="40" rx="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8" />
+    <text x="325" y="304" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Tampilkan Pesan Error</text>
+  </g>
+  <line x1="325" y1="320" x2="325" y2="341" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- End Node (Gagal) -->
+  <g>
+    <circle cx="325" cy="350" r="9" fill="none" stroke="#0f172a" stroke-width="1.5" />
+    <circle cx="325" cy="350" r="5" fill="#0f172a" />
+  </g>
+
+  <!-- Decision 1 Branch: YES (Kirim request sign ke MetaMask) -->
+  <line x1="365" y1="225" x2="435" y2="225" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="390" y="218" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#22c55e">Ya</text>
+
+  <!-- Action 4: Request MetaMask Sign -->
+  <g filter="url(#shadow)">
+    <rect x="435" y="205" width="160" height="40" rx="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.8" />
+    <text x="515" y="229" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Request Sign Transaksi</text>
+  </g>
+
+  <!-- Arrow from MetaMask sign request to User decision (confirm transaction) -->
+  <path d="M 515,245 L 515,265 L 140,265 L 140,290" fill="none" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Decision 2: Setujui Transaksi? -->
+  <g>
+    <polygon points="140,290 180,315 140,340 100,315" fill="#fef9c3" stroke="#d97706" stroke-width="1.8" />
+    <text x="140" y="319" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">Setuju Sign?</text>
+  </g>
+
+  <!-- Decision 2 Branch: NO -->
+  <line x1="100" y1="315" x2="80" y2="315" stroke="#0f172a" stroke-width="1.5" />
+  <line x1="80" y1="315" x2="80" y2="341" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="85" y="308" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#ef4444">Tidak</text>
+
+  <!-- End Node 2 (Gagal) -->
+  <g>
+    <circle cx="80" cy="350" r="9" fill="none" stroke="#0f172a" stroke-width="1.5" />
+    <circle cx="80" cy="350" r="5" fill="#0f172a" />
+  </g>
+
+  <!-- Decision 2 Branch: YES -->
+  <path d="M 140,340 L 140,400 L 245,400" fill="none" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="148" y="355" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#22c55e">Ya</text>
+
+  <!-- Action 5: DApp Tampilkan Pending -->
+  <g filter="url(#shadow)">
+    <rect x="245" y="380" width="160" height="40" rx="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8" />
+    <text x="325" y="404" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Tampilkan Status "Pending"</text>
+  </g>
+
+  <!-- Signer also triggers MetaMask to Broadcast -->
+  <path d="M 325,380 L 325,360 L 515,360 L 515,380" fill="none" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 6: MetaMask Broadcast Transaksi -->
+  <g filter="url(#shadow)">
+    <rect x="435" y="380" width="160" height="40" rx="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.8" />
+    <text x="515" y="404" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Sign &amp; Kirim Transaksi</text>
+  </g>
+  <line x1="595" y1="400" x2="625" y2="400" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 7: Smart Contract Update State -->
+  <g filter="url(#shadow)">
+    <rect x="625" y="380" width="160" height="40" rx="6" fill="#f5f3ff" stroke="#6366f1" stroke-width="1.8" />
+    <text x="705" y="404" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Eksekusi transfer()</text>
+  </g>
+  <line x1="705" y1="420" x2="705" y2="435" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Decision 3: Paused / Blacklisted? -->
+  <g>
+    <polygon points="705,435 745,460 705,485 665,460" fill="#fef9c3" stroke="#d97706" stroke-width="1.8" />
+    <text x="705" y="464" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">Paused/Blocked?</text>
+  </g>
+
+  <!-- Decision 3 Branch: YES (Revert) -->
+  <line x1="745" y1="460" x2="775" y2="460" stroke="#0f172a" stroke-width="1.5" />
+  <line x1="775" y1="460" x2="775" y2="486" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="752" y="452" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#ef4444">Ya</text>
+
+  <!-- End Node 3 (Revert) -->
+  <g>
+    <circle cx="775" cy="495" r="9" fill="none" stroke="#0f172a" stroke-width="1.5" />
+    <circle cx="775" cy="495" r="5" fill="#0f172a" />
+  </g>
+
+  <!-- Decision 3 Branch: NO -->
+  <line x1="705" y1="485" x2="705" y2="510" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+  <text x="713" y="498" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#22c55e">Tidak</text>
+
+  <!-- Action 8: Update Balances & Emit Event -->
+  <g filter="url(#shadow)">
+    <rect x="625" y="510" width="160" height="40" rx="6" fill="#f5f3ff" stroke="#6366f1" stroke-width="1.8" />
+    <text x="705" y="534" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Update State &amp; Emit Event</text>
+  </g>
+  <line x1="625" y1="530" x2="595" y2="530" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 9: Kirim Resi Transaksi (Receipt) -->
+  <g filter="url(#shadow)">
+    <rect x="435" y="510" width="160" height="40" rx="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.8" />
+    <text x="515" y="534" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Kirim Resi (Receipt)</text>
+  </g>
+  <line x1="435" y1="530" x2="405" y2="530" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- Action 10: Update Saldo di UI & Sukses -->
+  <g filter="url(#shadow)">
+    <rect x="245" y="510" width="160" height="40" rx="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8" />
+    <text x="325" y="534" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">Tampilkan Notif Sukses</text>
+  </g>
+  
+  <!-- Flow from Pending action to UI update action (pending state resolved) -->
+  <line x1="325" y1="420" x2="325" y2="510" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <line x1="325" y1="550" x2="325" y2="595" stroke="#0f172a" stroke-width="1.5" marker-end="url(#arrow-solid)" />
+
+  <!-- End Node (Sukses) -->
+  <g>
+    <circle cx="325" cy="605" r="9" fill="none" stroke="#0f172a" stroke-width="1.5" />
+    <circle cx="325" cy="605" r="5" fill="#0f172a" />
+  </g>
+</svg>

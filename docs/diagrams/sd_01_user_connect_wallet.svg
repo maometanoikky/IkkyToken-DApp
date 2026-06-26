@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="748" viewBox="0 0 850 748">
+  <defs>
+    <!-- Solid Arrow Marker -->
+    <marker id="arrow-solid" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0f172a" />
+    </marker>
+    <!-- Return Arrow Marker -->
+    <marker id="arrow-return" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#334155" />
+    </marker>
+    <!-- Drop Shadow Filter for Lifelines -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#94a3b8" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+  
+  <!-- Diagram Title -->
+  <text x="425" y="30" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="bold" fill="#0f172a" text-anchor="middle">SD-01: User Menghubungkan Wallet Metamask</text>
+
+  <!-- Lifeline Vertical Dashed Lines (Start at y1=90 to avoid crossing boxes) -->
+  <line x1="80" y1="90" x2="80" y2="865" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4" />
+  <line x1="280" y1="90" x2="280" y2="865" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4" />
+  <line x1="480" y1="90" x2="480" y2="865" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4" />
+  <line x1="680" y1="90" x2="680" y2="865" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4" />
+
+  <!-- Lifeline Boxes -->
+  <!-- 1. Actor -->
+  <g filter="url(#shadow)">
+    <rect x="20" y="50" width="120" height="40" rx="6" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="80" y="74" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">User / Investor</text>
+  </g>
+  <!-- 2. Frontend DApp -->
+  <g filter="url(#shadow)">
+    <rect x="220" y="50" width="120" height="40" rx="6" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="280" y="74" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">Frontend DApp</text>
+  </g>
+  <!-- 3. MetaMask -->
+  <g filter="url(#shadow)">
+    <rect x="420" y="50" width="120" height="40" rx="6" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="480" y="74" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">MetaMask Wallet</text>
+  </g>
+  <!-- 4. Smart Contract -->
+  <g filter="url(#shadow)">
+    <rect x="620" y="50" width="120" height="40" rx="6" fill="#ffffff" stroke="#000000" stroke-width="2" />
+    <text x="680" y="74" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">Smart Contract</text>
+  </g>
+
+  <!-- Activation Bars (Focus of Control) -->
+  <rect x="75" y="100" width="10" height="527" fill="#e2e8f0" stroke="#475569" stroke-width="1" />
+  <rect x="275" y="100" width="10" height="527" fill="#e2e8f0" stroke="#475569" stroke-width="1" />
+  <rect x="475" y="127" width="10" height="203" fill="#e2e8f0" stroke="#475569" stroke-width="1" />
+  <rect x="675" y="363" width="10" height="203" fill="#e2e8f0" stroke="#475569" stroke-width="1" />
+
+  <!-- Messages & Self-Calls -->
+  
+  <!-- 1. Klik Hubungkan Wallet -->
+  <g>
+    <line x1="85" y1="114" x2="275" y2="114" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="180" y="104" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">1. Klik "Connect Wallet"</text>
+  </g>
+
+  <!-- 2. Request Akun (eth_requestAccounts) -->
+  <g>
+    <line x1="285" y1="141" x2="475" y2="141" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="380" y="131" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">2. eth_requestAccounts</text>
+  </g>
+
+  <!-- 3. Tampilkan Pop-up Koneksi -->
+  <g>
+    <line x1="475" y1="188" x2="85" y2="188" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="280" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">3. Tampilkan Persetujuan Koneksi</text>
+  </g>
+
+  <!-- 4. Konfirmasi & Setujui -->
+  <g>
+    <line x1="85" y1="242" x2="475" y2="242" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="280" y="232" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">4. Menyetujui Koneksi Akun</text>
+  </g>
+
+  <!-- 5. Kembalikan Alamat Wallet & Signer -->
+  <g>
+    <line x1="475" y1="303" x2="285" y2="303" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-return)" />
+    <text x="380" y="293" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">5. Return Alamat Wallet &amp; Provider</text>
+  </g>
+
+  <!-- 6. Cek Status Kepemilikan (isOwnershipRenounced / owner) -->
+  <g>
+    <line x1="285" y1="377" x2="675" y2="377" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="480" y="367" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">6. isOwnershipRenounced() &amp; owner()</text>
+  </g>
+
+  <!-- 7. Return Status Kepemilikan -->
+  <g>
+    <line x1="675" y1="431" x2="285" y2="431" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-return)" />
+    <text x="480" y="421" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">7. Return Status (Boolean &amp; Address)</text>
+  </g>
+
+  <!-- 8. Request Saldo (balanceOf) -->
+  <g>
+    <line x1="285" y1="485" x2="675" y2="485" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrow-solid)" />
+    <text x="480" y="475" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">8. balanceOf(address)</text>
+  </g>
+
+  <!-- 9. Return Jumlah Saldo -->
+  <g>
+    <line x1="675" y1="539" x2="285" y2="539" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-return)" />
+    <text x="480" y="529" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">9. Return Saldo Token (uint256)</text>
+  </g>
+
+  <!-- 10. Update Tampilan UI & Notifikasi (No Admin Panel) -->
+  <g>
+    <line x1="275" y1="606" x2="85" y2="606" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-return)" />
+    <text x="180" y="597" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">10. Tampilkan Info Saldo &amp; Dashboard User</text>
+  </g>
+</svg>

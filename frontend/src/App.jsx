@@ -205,15 +205,29 @@ function App() {
     };
 
     const handleTransaction = (tx) => {
-        setTransactions(prev => [tx, ...prev]);
+        setTransactions(prev => {
+            // Jika transaksi sukses/error, cari apakah ada transaksi pending dengan hash atau type yang sama
+            const pendingIndex = prev.findIndex(
+                item => (item.hash && tx.hash && item.hash === tx.hash && item.status === 'pending') || 
+                        (item.type === tx.type && item.status === 'pending')
+            );
+            
+            if (pendingIndex !== -1) {
+                const updated = [...prev];
+                updated[pendingIndex] = tx; // Timpa transaksi pending dengan status baru (success/error)
+                return updated;
+            }
+            
+            return [tx, ...prev]; // Jika tidak ada pending, tambahkan sebagai transaksi baru
+        });
 
         // Show toast notification
         if (tx.status === 'success') {
-            toast.success(tx.message, { duration: 5000 });
+            toast.success(tx.message, { id: tx.type, duration: 5000 });
             // Refresh contract state after successful transaction
             setTimeout(fetchContractState, 1000);
         } else if (tx.status === 'error') {
-            toast.error(tx.message, { duration: 5000 });
+            toast.error(tx.message, { id: tx.type, duration: 5000 });
         } else if (tx.status === 'pending') {
             toast.loading(tx.message, { id: tx.type });
         }

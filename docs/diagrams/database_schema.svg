@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <!-- Shadow Filter for Table Boxes -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#64748b" flood-opacity="0.3" />
+    </filter>
+    <!-- Crow's Foot / ERD Markers -->
+    <!-- 1 (One) Marker -->
+    <marker id="one" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <line x1="5" y1="0" x2="5" y2="10" stroke="#475569" stroke-width="2" />
+    </marker>
+    <!-- Many Marker -->
+    <marker id="many" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 6 5 L 0 8 M 6 0 L 6 10" fill="none" stroke="#475569" stroke-width="1.8" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+
+  <!-- Title -->
+  <text x="400" y="30" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="bold" fill="#0f172a" text-anchor="middle">Physical Data Model: Solidity State Schema</text>
+  <text x="400" y="50" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#475569" text-anchor="middle">Pemodelan Relasional State Mapping Kontrak Pintar (Kamus Data Fisik)</text>
+
+  <!-- Table 1: tbl_balances (Mapping Saldo) -->
+  <g filter="url(#shadow)">
+    <!-- Header -->
+    <path d="M 50,90 Q 50,85 55,85 L 265,85 Q 270,85 270,90 L 270,115 L 50,115 Z" fill="#0284c7" />
+    <text x="160" y="104" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">tbl_balances</text>
+    <!-- Body -->
+    <rect x="50" y="115" width="220" height="90" rx="0" fill="#f8fafc" stroke="#0284c7" stroke-width="1.5" />
+    <!-- PK Column -->
+    <text x="60" y="138" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0f172a">🔑 account_address</text>
+    <text x="190" y="138" font-family="Courier New, monospace" font-size="10" font-weight="bold" fill="#0369a1">VARCHAR(42) [PK]</text>
+    <line x1="50" y1="152" x2="270" y2="152" stroke="#e2e8f0" stroke-width="1" />
+    <!-- Other Columns -->
+    <text x="60" y="172" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0f172a">   balance</text>
+    <text x="190" y="172" font-family="Courier New, monospace" font-size="10" font-weight="bold" fill="#475569">DECIMAL(78,0)</text>
+    
+    <!-- Footer/Mapping Note -->
+    <rect x="50" y="205" width="220" height="20" fill="#f1f5f9" stroke="#0284c7" stroke-width="1.5" />
+    <text x="160" y="218" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="bold" fill="#64748b" text-anchor="middle">Mapping: address =&gt; uint256</text>
+  </g>
+
+  <!-- Table 2: tbl_allowances (Mapping Delegasi) -->
+  <g filter="url(#shadow)">
+    <!-- Header -->
+    <path d="M 480,90 Q 480,85 485,85 L 745,85 Q 750,85 750,90 L 750,115 L 480,115 Z" fill="#0f766e" />
+    <text x="615" y="104" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">tbl_allowances</text>
+    <!-- Body -->
+    <rect x="480" y="115" width="270" height="120" rx="0" fill="#f8fafc" stroke="#0f766e" stroke-width="1.5" />
+    <!-- PK/FK 1 Column -->
+    <text x="490" y="138" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0f172a">🔑 owner_address</text>
+    <text x="635" y="138" font-family="Courier New, monospace" font-size="10" font-weight="bold" fill="#0d9488">VARCHAR(42) [PK,FK]</text>
+    <line x1="480" y1="152" x2="750" y2="152" stroke="#e2e8f0" stroke-width="1" />
+    <!-- PK/FK 2 Column -->
+    <text x="490" y="172" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0f172a">🔑 spender_address</text>
+    <text x="635" y="172" font-family="Courier New, monospace" font-size="10" font-weight="bold" fill="#0d9488">VARCHAR(42) [PK,FK]</text>
+    <line x1="480" y1="186" x2="750" y2="186" stroke="#e2e8f0" stroke-width="1" />
+    <!-- Other Columns -->
+    <text x="490" y="206" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0f172a">   amount</text>
+    <text x="635" y="206" font-family="Courier New, monospace" font-size="10" font-weight="bold" fill="#475569">DECIMAL(78,0)</text>
+
+    <!-- Footer/Mapping Note -->
+    <rect x="480" y="235" width="270" height="20" fill="#f1f5f9" stroke="#0f766e" stroke-width="1.5" />
+    <text x="615" y="248" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="bold" fill="#64748b" text-anchor="middle">Mapping: addr =&gt; (addr =&gt; uint256)</text>
+  </g>
+
+  <!-- Table 3: tbl_blacklisted (Mapping Blacklist) -->
+  <g filter="url(#shadow)">
+    <!-- Header -->
+    <path d="M 260,320 Q 260,315 265,315 L 515,315 Q 520,315 520,320 L 520,345 L 260,345 Z" fill="#b91c1c" />
+    <text x="390" y="334" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">tbl_blacklisted</text>
+    <!-- Body -->
+    <rect x="260" y="345" width="260" height="90" rx="0" fill="#f8fafc" stroke="#b91c1c" stroke-width="1.5" />
+    <!-- PK/FK Column -->
+    <text x="270" y="368" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0f172a">🔑 account_address</text>
+    <text x="415" y="368" font-family="Courier New, monospace" font-size="10" font-weight="bold" fill="#b91c1c">VARCHAR(42) [PK,FK]</text>
+    <line x1="260" y1="382" x2="520" y2="382" stroke="#e2e8f0" stroke-width="1" />
+    <!-- Other Columns -->
+    <text x="270" y="402" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0f172a">   is_blacklisted</text>
+    <text x="415" y="402" font-family="Courier New, monospace" font-size="10" font-weight="bold" fill="#475569">BOOLEAN</text>
+
+    <!-- Footer/Mapping Note -->
+    <rect x="260" y="435" width="260" height="20" fill="#f1f5f9" stroke="#b91c1c" stroke-width="1.5" />
+    <text x="390" y="448" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="bold" fill="#64748b" text-anchor="middle">Mapping: address =&gt; bool</text>
+  </g>
+
+  <!-- ERD RELATIONSHIP PATHS / LINES -->
+
+  <!-- Rel 1: tbl_balances (account_address) -> tbl_allowances (owner_address) -->
+  <!-- 1 to Many relationship -->
+  <path d="M 270,138 L 375,138 L 375,138 L 480,138" fill="none" stroke="#475569" stroke-width="1.5" marker-start="url(#one)" marker-end="url(#many)" />
+  <text x="280" y="132" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#475569">1</text>
+  <text x="465" y="132" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#475569">0..*</text>
+
+  <!-- Rel 2: tbl_balances (account_address) -> tbl_allowances (spender_address) -->
+  <!-- 1 to Many relationship -->
+  <path d="M 270,145 L 350,145 L 350,172 L 480,172" fill="none" stroke="#475569" stroke-width="1.5" marker-start="url(#one)" marker-end="url(#many)" />
+  <text x="280" y="157" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#475569">1</text>
+  <text x="465" y="184" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#475569">0..*</text>
+
+  <!-- Rel 3: tbl_balances (account_address) -> tbl_blacklisted (account_address) -->
+  <!-- 1 to 0..1 (One to One/Optional) relationship -->
+  <path d="M 160,225 L 160,368 L 260,368" fill="none" stroke="#475569" stroke-width="1.5" marker-start="url(#one)" marker-end="url(#one)" />
+  <text x="165" y="240" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#475569">1</text>
+  <text x="245" y="362" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#475569">0..1</text>
+
+  <!-- Legend / Explanatory Note Box -->
+  <g filter="url(#shadow)">
+    <rect x="540" y="320" width="210" height="115" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+    <text x="550" y="338" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0f172a">Keterangan Relasi:</text>
+    <text x="550" y="358" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#334155">• 1 = Wallet terdaftar di sistem.</text>
+    <text x="550" y="373" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#334155">• 0..* = Memiliki nol atau banyak delegasi.</text>
+    <text x="550" y="388" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#334155">• 0..1 = Memiliki maksimal satu status blacklist.</text>
+    <text x="550" y="403" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#0f766e">• PK = Primary Key  |  FK = Foreign Key</text>
+  </g>
+</svg>

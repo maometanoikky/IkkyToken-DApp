@@ -103,7 +103,7 @@ export default function TransactionLog({ transactions }) {
                                             {new Date().toLocaleTimeString(t('timeFormat'))}
                                         </span>
                                     </div>
-                                    <p className={`text-sm ${tx.status === 'error' ? 'text-red-600 dark:text-red-400' : 'text-slate-600 dark:text-slate-300'}`}>
+                                    <p className={`text-sm ${tx.status === 'error' ? 'text-red-600 dark:text-red-400' : 'text-slate-600 dark:text-slate-300'} break-all`}>
                                         {tx.message}
                                     </p>
                                     {tx.hash && (

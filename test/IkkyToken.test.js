@@ -147,4 +147,92 @@ describe("IkkyToken", function () {
             expect(await token.balanceOf(addr1.address)).to.equal(ethers.parseEther("100"));
         });
     });
+
+    describe("Blacklist & Unblacklist", function () {
+        it("Owner should be able to blacklist an account", async function () {
+            await expect(token.blacklist(addr1.address))
+                .to.emit(token, "Blacklisted")
+                .withArgs(addr1.address);
+            expect(await token.isBlacklisted(addr1.address)).to.equal(true);
+        });
+
+        it("Owner should not be able to blacklist an already blacklisted account", async function () {
+            await token.blacklist(addr1.address);
+            await expect(token.blacklist(addr1.address))
+                .to.be.revertedWith("IkkyToken: Account is already blacklisted");
+        });
+
+        it("Non-owner should not be able to blacklist", async function () {
+            await expect(
+                token.connect(addr1).blacklist(addr2.address)
+            ).to.be.revertedWithCustomError(token, "OwnableUnauthorizedAccount");
+        });
+
+        it("Owner should be able to unblacklist an account", async function () {
+            await token.blacklist(addr1.address);
+            await expect(token.unblacklist(addr1.address))
+                .to.emit(token, "UnBlacklisted")
+                .withArgs(addr1.address);
+            expect(await token.isBlacklisted(addr1.address)).to.equal(false);
+        });
+
+        it("Owner should not be able to unblacklist an account that is not blacklisted", async function () {
+            await expect(token.unblacklist(addr1.address))
+                .to.be.revertedWith("IkkyToken: Account is not blacklisted");
+        });
+
+        it("Non-owner should not be able to unblacklist", async function () {
+            await token.blacklist(addr1.address);
+            await expect(
+                token.connect(addr1).unblacklist(addr1.address)
+            ).to.be.revertedWithCustomError(token, "OwnableUnauthorizedAccount");
+        });
+    });
+
+    describe("Blacklist Transfer Restrictions", function () {
+        beforeEach(async function () {
+            await token.mint(owner.address, ethers.parseEther("1000"));
+            await token.mint(addr1.address, ethers.parseEther("1000"));
+        });
+
+        it("Should prevent transfers from blacklisted sender", async function () {
+            await token.blacklist(addr1.address);
+            await expect(
+                token.connect(addr1).transfer(addr2.address, ethers.parseEther("100"))
+            ).to.be.revertedWith("IkkyToken: Sender is blacklisted");
+        });
+
+        it("Should prevent transfers to blacklisted receiver", async function () {
+            await token.blacklist(addr2.address);
+            await expect(
+                token.transfer(addr2.address, ethers.parseEther("100"))
+            ).to.be.revertedWith("IkkyToken: Receiver is blacklisted");
+        });
+    });
+
+    describe("Standard renounceOwnership override", function () {
+        it("Standard renounceOwnership should redirect to permanent renounce", async function () {
+            await expect(token.renounceOwnership())
+                .to.emit(token, "OwnershipRenouncedPermanently")
+                .withArgs(owner.address);
+
+            expect(await token.owner()).to.equal(ethers.ZeroAddress);
+            expect(await token.isOwnershipRenounced()).to.equal(true);
+        });
+    });
+
+    describe("transferOwnership", function () {
+        it("Owner should be able to transfer ownership before renounce", async function () {
+            await expect(token.transferOwnership(addr1.address))
+                .to.emit(token, "OwnershipTransferred")
+                .withArgs(owner.address, addr1.address);
+            expect(await token.owner()).to.equal(addr1.address);
+        });
+
+        it("Non-owner should not be able to transfer ownership", async function () {
+            await expect(
+                token.connect(addr1).transferOwnership(addr2.address)
+            ).to.be.revertedWithCustomError(token, "OwnableUnauthorizedAccount");
+        });
+    });
 });
