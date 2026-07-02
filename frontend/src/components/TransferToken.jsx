@@ -111,7 +111,7 @@ export default function TransferToken({ contract, onTransaction }) {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none cursor-pointer"
+                    className="btn-primary w-full flex items-center justify-center gap-2 cursor-pointer"
                 >
                     {isSubmitting ? (
                         <>
