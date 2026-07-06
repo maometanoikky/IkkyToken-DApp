@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { parseEther } from 'ethers';
 import { useLanguage } from '../context/LanguageContext';
+import { formatAddress } from '../config/contract';
 
 /**
  * TransferToken Component
@@ -40,7 +41,7 @@ export default function TransferToken({ contract, onTransaction }) {
                 type: 'transfer',
                 hash: tx.hash,
                 status: 'success',
-                message: t('successTransfer', { amount: transferAmount, address: recipientAddress.slice(0, 6) })
+                message: t('successTransfer', { amount: transferAmount, address: formatAddress(recipientAddress) })
             });
 
             setRecipientAddress('');

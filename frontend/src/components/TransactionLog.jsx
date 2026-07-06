@@ -13,16 +13,18 @@ export default function TransactionLog({ transactions }) {
 
     if (transactions.length === 0) {
         return (
-            <div className="card">
+            <div className="card lg:h-full flex flex-col">
                 <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                     <svg className="w-6 h-6 text-slate-500 dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
                     {t('logTitle')}
                 </h2>
-                <p className="text-slate-600 dark:text-slate-500 text-center py-8">
-                    {t('noTransactions')}
-                </p>
+                <div className="flex-1 flex items-center justify-center">
+                    <p className="text-slate-600 dark:text-slate-500 text-center py-8">
+                        {t('noTransactions')}
+                    </p>
+                </div>
             </div>
         );
     }
@@ -72,7 +74,7 @@ export default function TransactionLog({ transactions }) {
     };
 
     return (
-        <div className="card">
+        <div className="card lg:h-full flex flex-col">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <svg className="w-6 h-6 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -81,7 +83,7 @@ export default function TransactionLog({ transactions }) {
                 <span className="text-sm font-normal text-slate-500 dark:text-slate-400">({transactions.length})</span>
             </h2>
 
-            <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+            <div className="flex-1 space-y-3 overflow-y-auto pr-2 min-h-0 max-h-96 lg:max-h-none">
                 {transactions.map((tx, index) => {
                     const typeLabel = getTypeLabel(tx.type);
                     return (

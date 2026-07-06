@@ -703,10 +703,8 @@ function App() {
                         </div>
 
                         {/* Right Column - Transaction Log */}
-                        <div className="lg:col-span-1">
-                            <div className="sticky top-24">
-                                <TransactionLog transactions={transactions} />
-                            </div>
+                        <div className="lg:col-span-1 lg:h-full">
+                            <TransactionLog transactions={transactions} />
                         </div>
                     </div>
                 )}

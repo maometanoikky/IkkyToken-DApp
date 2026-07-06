@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { parseEther } from 'ethers';
 import { useLanguage } from '../context/LanguageContext';
+import { formatAddress } from '../config/contract';
+
 
 /**
  * AdminPanel Component
@@ -32,7 +34,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'mint',
                 hash: tx.hash,
                 status: 'pending',
-                message: t('mintingInProgress', { amount: mintAmount, address: mintAddress })
+                message: t('mintingInProgress', { amount: mintAmount, address: formatAddress(mintAddress) })
             });
 
             await tx.wait();
@@ -41,7 +43,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'mint',
                 hash: tx.hash,
                 status: 'success',
-                message: t('mintSuccess', { amount: mintAmount, address: mintAddress })
+                message: t('mintSuccess', { amount: mintAmount, address: formatAddress(mintAddress) })
             });
 
             setMintAddress('');
@@ -139,7 +141,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'blacklist',
                 hash: tx.hash,
                 status: 'pending',
-                message: t('blacklistingInProgress', { address: blacklistAddress })
+                message: t('blacklistingInProgress', { address: formatAddress(blacklistAddress) })
             });
 
             await tx.wait();
@@ -148,7 +150,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'blacklist',
                 hash: tx.hash,
                 status: 'success',
-                message: t('blacklistSuccess', { address: blacklistAddress })
+                message: t('blacklistSuccess', { address: formatAddress(blacklistAddress) })
             });
             setBlacklistAddress('');
         } catch (error) {
@@ -178,7 +180,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'unblacklist',
                 hash: tx.hash,
                 status: 'pending',
-                message: t('unblacklistingInProgress', { address: blacklistAddress })
+                message: t('unblacklistingInProgress', { address: formatAddress(blacklistAddress) })
             });
 
             await tx.wait();
@@ -187,7 +189,7 @@ export default function AdminPanel({ contract, isOwner, isPaused, onTransaction 
                 type: 'unblacklist',
                 hash: tx.hash,
                 status: 'success',
-                message: t('unblacklistSuccess', { address: blacklistAddress })
+                message: t('unblacklistSuccess', { address: formatAddress(blacklistAddress) })
             });
             setBlacklistAddress('');
         } catch (error) {
