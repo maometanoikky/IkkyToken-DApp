@@ -399,9 +399,9 @@ function App() {
             {/* Premium Floating Header */}
             <div className={`px-4 pt-6 sticky ${isPaused && account ? 'top-12' : 'top-0'} z-40`}>
                 <header className="max-w-[96%] mx-auto glass rounded-2xl border border-slate-300/50 dark:border-slate-700/50 shadow-xl transition-colors duration-300">
-                    <div className="px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="px-4 py-3 md:px-6 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
                         {/* Top Row on Mobile: Logo & Toggle Buttons */}
-                        <div className="flex items-center justify-between w-full md:w-auto gap-4">
+                        <div className="flex items-center justify-between w-full md:w-auto gap-2 md:gap-4">
                             <div className="flex items-center gap-3">
                                 {/* Simple & Bold Custom Logo */}
                                 <div className="flex items-center justify-center hover:scale-110 transition-transform duration-300">
