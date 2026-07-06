@@ -17,7 +17,7 @@ import Whitepaper from './components/Whitepaper';
 import { useLanguage } from './context/LanguageContext';
 
 // Config
-import { IKKYTOKEN_ABI, CONTRACT_ADDRESS } from './config/contract';
+import { IKKYTOKEN_ABI, CONTRACT_ADDRESSES, CONTRACT_ADDRESS } from './config/contract';
 
 /**
  * Main App Component
@@ -35,6 +35,7 @@ function App() {
     const [provider, setProvider] = useState(null);
     const [signer, setSigner] = useState(null);
     const [contract, setContract] = useState(null);
+    const [activeContractAddress, setActiveContractAddress] = useState(CONTRACT_ADDRESS);
     const [ownerAddress, setOwnerAddress] = useState('');
     const [isRenounced, setIsRenounced] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
@@ -174,13 +175,38 @@ function App() {
         }
     }, [account, t]);
 
-    // Initialize contract when signer changes
+    // Initialize contract dynamically when signer or provider changes
     useEffect(() => {
-        if (signer && CONTRACT_ADDRESS !== 'YOUR_CONTRACT_ADDRESS_HERE') {
-            const tokenContract = new Contract(CONTRACT_ADDRESS, IKKYTOKEN_ABI, signer);
-            setContract(tokenContract);
-        }
-    }, [signer, CONTRACT_ADDRESS]);
+        const initContract = async () => {
+            if (signer && provider) {
+                try {
+                    const network = await provider.getNetwork();
+                    const chainIdString = network.chainId.toString();
+                    
+                    // Select contract address based on current chainId
+                    let selectedAddress = CONTRACT_ADDRESSES[chainIdString] || CONTRACT_ADDRESS;
+                    
+                    if (selectedAddress && selectedAddress !== 'YOUR_SEPOLIA_CONTRACT_ADDRESS_HERE' && selectedAddress !== 'YOUR_CONTRACT_ADDRESS_HERE') {
+                        const tokenContract = new Contract(selectedAddress, IKKYTOKEN_ABI, signer);
+                        setContract(tokenContract);
+                        setActiveContractAddress(selectedAddress);
+                    } else {
+                        // Fallback/Reset if contract address is not configured yet for the network
+                        setContract(null);
+                        setActiveContractAddress(selectedAddress);
+                    }
+                } catch (error) {
+                    console.error('Error initializing contract:', error);
+                    setContract(null);
+                    setActiveContractAddress('');
+                }
+            } else {
+                setContract(null);
+                setActiveContractAddress(CONTRACT_ADDRESS);
+            }
+        };
+        initContract();
+    }, [signer, provider]);
 
     // Fetch contract state when contract changes
     useEffect(() => {
@@ -234,7 +260,9 @@ function App() {
     };
 
     const isOwner = account && ownerAddress && account.toLowerCase() === ownerAddress.toLowerCase();
-    const isContractConfigured = CONTRACT_ADDRESS !== 'YOUR_CONTRACT_ADDRESS_HERE';
+    const isContractConfigured = activeContractAddress && 
+        activeContractAddress !== 'YOUR_CONTRACT_ADDRESS_HERE' && 
+        activeContractAddress !== 'YOUR_SEPOLIA_CONTRACT_ADDRESS_HERE';
 
     return (
         <div className="min-h-screen pb-10 bg-slate-50 dark:bg-slate-950 relative overflow-hidden z-0 transition-colors duration-300">

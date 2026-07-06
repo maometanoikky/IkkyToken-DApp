@@ -46,12 +46,19 @@ export const IKKYTOKEN_ABI = [
 ];
 
 /**
- * Contract Address
- * 
- * PENTING: Ganti dengan alamat kontrak setelah deploy!
- * Alamat ini akan berbeda untuk setiap deployment.
+ * Contract Addresses for multiple networks.
+ * Map chainId (string) to contract address.
  */
-export const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+export const CONTRACT_ADDRESSES = {
+    "11155111": "0xFA2AbE36F96e779be0f96C3a1a51cC4F6ff4A4D3", // Sepolia Testnet
+    "31337": "0x5FbDB2315678afecb367f032d93F642f64180aa3"    // Hardhat Localhost
+};
+
+/**
+ * Contract Address
+ * Fallback/Default address
+ */
+export const CONTRACT_ADDRESS = CONTRACT_ADDRESSES["31337"];
 
 /**
  * Network Configuration
