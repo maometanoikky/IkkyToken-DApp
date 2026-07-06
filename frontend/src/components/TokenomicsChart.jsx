@@ -40,17 +40,11 @@ const TokenomicsChart = ({ contract, account, isRenounced }) => {
 
         fetchTokenData();
         
-        // Listen to transfer events to update chart dynamically if possible
         if (contract) {
-            const filterTo = contract.filters.Transfer(null, account);
-            const filterFrom = contract.filters.Transfer(account, null);
-            
-            contract.on(filterTo, fetchTokenData);
-            contract.on(filterFrom, fetchTokenData);
+            contract.on("Transfer", fetchTokenData);
             
             return () => {
-                contract.off(filterTo, fetchTokenData);
-                contract.off(filterFrom, fetchTokenData);
+                contract.off("Transfer", fetchTokenData);
             };
         }
     }, [contract, account, t]);
