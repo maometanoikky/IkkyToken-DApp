@@ -50,7 +50,7 @@ export const IKKYTOKEN_ABI = [
  * Map chainId (string) to contract address.
  */
 export const CONTRACT_ADDRESSES = {
-    "11155111": "0xFA2AbE36F96e779be0f96C3a1a51cC4F6ff4A4D3", // Sepolia Testnet
+    "11155111": "0x7Ae78594628b1Eb03440b03a85441A5015DC02fA", // Sepolia Testnet
     "31337": "0x5FbDB2315678afecb367f032d93F642f64180aa3"    // Hardhat Localhost
 };
 
